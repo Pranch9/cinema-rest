@@ -5,7 +5,7 @@ import ru.pranch.cinema.enums.Status;
 
 public class Ticket {
   private UUID id;
-  private Screening screening;
+  private Session session;
   private Seat seat;
   private User user;
   private Status status;
@@ -19,12 +19,12 @@ public class Ticket {
     this.id = id;
   }
 
-  public Screening getScreening() {
-    return screening;
+  public Session getScreening() {
+    return session;
   }
 
-  public void setScreening(Screening screening) {
-    this.screening = screening;
+  public void setScreening(Session session) {
+    this.session = session;
   }
 
   public Seat getSeat() {
@@ -63,7 +63,7 @@ public class Ticket {
   public String toString() {
     return "Ticket{" +
       "id=" + id +
-      ", screening=" + screening +
+      ", screening=" + session +
       ", seat=" + seat +
       ", user=" + user +
       ", status=" + status +

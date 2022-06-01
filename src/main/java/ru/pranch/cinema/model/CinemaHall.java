@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class CinemaHall {
   private UUID id;
-  private String name;
+  private String hallName;
   private int rowsNum;
   private int placeNumber;
   private Cinema cinema;
@@ -17,12 +17,12 @@ public class CinemaHall {
     this.id = id;
   }
 
-  public String getName() {
-    return name;
+  public String getHallName() {
+    return hallName;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setHallName(String hallName) {
+    this.hallName = hallName;
   }
 
   public int getRowsNum() {
@@ -53,7 +53,7 @@ public class CinemaHall {
   public String toString() {
     return "CinemaHall{" +
       "id=" + id +
-      ", name='" + name + '\'' +
+      ", hallName='" + hallName + '\'' +
       ", rowsNum=" + rowsNum +
       ", placeNumber=" + placeNumber +
       ", cinema=" + cinema +

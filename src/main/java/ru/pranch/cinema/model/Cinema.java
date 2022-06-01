@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class Cinema {
   private UUID id;
-  private String name;
+  private String cinemaName;
 
   public UUID getId() {
     return id;
@@ -14,19 +14,19 @@ public class Cinema {
     this.id = id;
   }
 
-  public String getName() {
-    return name;
+  public String getCinemaName() {
+    return cinemaName;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setCinemaName(String cinemaName) {
+    this.cinemaName = cinemaName;
   }
 
   @Override
   public String toString() {
     return "Cinema{" +
       "id=" + id +
-      ", name='" + name + '\'' +
+      ", cinemaName='" + cinemaName + '\'' +
       '}';
   }
 }

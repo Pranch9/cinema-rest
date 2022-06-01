@@ -3,11 +3,11 @@ package ru.pranch.cinema.model;
 import java.util.Date;
 import java.util.UUID;
 
-public class Screening {
+public class Session {
   private UUID id;
   private Movie movie;
   private Cinema cinema;
-  private Date date;
+  private Date sessionDate;
 
   public UUID getId() {
     return id;
@@ -33,12 +33,12 @@ public class Screening {
     this.cinema = cinema;
   }
 
-  public Date getDate() {
-    return date;
+  public Date getSessionDate() {
+    return sessionDate;
   }
 
-  public void setDate(Date date) {
-    this.date = date;
+  public void setSessionDate(Date sessionDate) {
+    this.sessionDate = sessionDate;
   }
 
   @Override
@@ -47,7 +47,7 @@ public class Screening {
       "id=" + id +
       ", movie=" + movie +
       ", cinema=" + cinema +
-      ", date=" + date +
+      ", date=" + sessionDate +
       '}';
   }
 }
