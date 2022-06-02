@@ -5,9 +5,10 @@ import java.util.UUID;
 public class CinemaHall {
   private UUID id;
   private String hallName;
-  private int rowsNum;
+  private int rowsNumber;
   private int placeNumber;
   private Cinema cinema;
+  private Session session;
 
   public UUID getId() {
     return id;
@@ -25,12 +26,12 @@ public class CinemaHall {
     this.hallName = hallName;
   }
 
-  public int getRowsNum() {
-    return rowsNum;
+  public int getRowsNumber() {
+    return rowsNumber;
   }
 
-  public void setRowsNum(int rowsNum) {
-    this.rowsNum = rowsNum;
+  public void setRowsNumber(int rowsNumber) {
+    this.rowsNumber = rowsNumber;
   }
 
   public int getPlaceNumber() {
@@ -54,7 +55,7 @@ public class CinemaHall {
     return "CinemaHall{" +
       "id=" + id +
       ", hallName='" + hallName + '\'' +
-      ", rowsNum=" + rowsNum +
+      ", rowsNumber=" + rowsNumber +
       ", placeNumber=" + placeNumber +
       ", cinema=" + cinema +
       '}';

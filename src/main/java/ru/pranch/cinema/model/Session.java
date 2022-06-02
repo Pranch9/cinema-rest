@@ -6,7 +6,7 @@ import java.util.UUID;
 public class Session {
   private UUID id;
   private Movie movie;
-  private Cinema cinema;
+  private CinemaHall cinemaHall;
   private Date sessionDate;
 
   public UUID getId() {
@@ -25,12 +25,12 @@ public class Session {
     this.movie = movie;
   }
 
-  public Cinema getCinema() {
-    return cinema;
+  public CinemaHall getCinemaHall() {
+    return cinemaHall;
   }
 
-  public void setCinema(Cinema cinema) {
-    this.cinema = cinema;
+  public void setCinemaHall(CinemaHall cinemaHall) {
+    this.cinemaHall = cinemaHall;
   }
 
   public Date getSessionDate() {
@@ -46,7 +46,7 @@ public class Session {
     return "Screening{" +
       "id=" + id +
       ", movie=" + movie +
-      ", cinema=" + cinema +
+      ", cinemaHall=" + cinemaHall +
       ", date=" + sessionDate +
       '}';
   }

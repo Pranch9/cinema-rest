@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class Seat {
   private UUID id;
-  private int rowNum;
+  private int rowNumber;
   private int place;
   private CinemaHall cinemaHall;
 
@@ -16,12 +16,12 @@ public class Seat {
     this.id = id;
   }
 
-  public int getRowNum() {
-    return rowNum;
+  public int getRowNumber() {
+    return rowNumber;
   }
 
-  public void setRowNum(int rowNum) {
-    this.rowNum = rowNum;
+  public void setRowNumber(int rowNumber) {
+    this.rowNumber = rowNumber;
   }
 
   public int getPlace() {
@@ -44,7 +44,7 @@ public class Seat {
   public String toString() {
     return "Seat{" +
       "id=" + id +
-      ", rowNum=" + rowNum +
+      ", rowNumber=" + rowNumber +
       ", place=" + place +
       ", cinemaHall=" + cinemaHall +
       '}';
