@@ -8,6 +8,10 @@ public class Movie {
   private String title;
   private MovieGenre movieGenre;
 
+  public Movie() {
+    this.id = UUID.randomUUID();
+  }
+
   public UUID getId() {
     return id;
   }

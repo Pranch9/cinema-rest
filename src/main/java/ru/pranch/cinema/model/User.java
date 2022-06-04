@@ -11,6 +11,10 @@ public class User {
   private char[] password;
   private Date creationDate;
 
+  public User() {
+    this.id = UUID.randomUUID();
+  }
+
   public UUID getId() {
     return id;
   }

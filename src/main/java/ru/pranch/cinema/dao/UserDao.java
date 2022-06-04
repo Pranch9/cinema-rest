@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.UUID;
 import ru.pranch.cinema.model.User;
 
-public interface UserDao extends BasicDao<User, UUID> {
+public interface UserDao extends BasicDao<User> {
   Optional<User> findByUsername(String name);
 
   Optional<User> findByMail(String mail);

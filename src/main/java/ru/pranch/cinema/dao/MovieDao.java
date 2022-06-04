@@ -6,7 +6,7 @@ import java.util.UUID;
 import ru.pranch.cinema.enums.MovieGenre;
 import ru.pranch.cinema.model.Movie;
 
-public interface MovieDao extends BasicDao<Movie, UUID> {
+public interface MovieDao extends BasicDao<Movie> {
   Optional<Movie> findByTitle(String name);
 
   List<Movie> findMoviesByGenre(MovieGenre movieGenre);

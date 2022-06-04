@@ -12,3 +12,19 @@ spring:
     username: admin
     password: admin
     driver-class-name: org.postgresql.Driver
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:h2:mem:cinema
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  flyway:
+    enabled: true
+    url: jdbc:h2:mem:cinema
+    user: sa
+    password:

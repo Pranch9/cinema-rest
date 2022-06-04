@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 import ru.pranch.cinema.model.Ticket;
 
-public interface TicketDao extends BasicDao<Ticket, UUID> {
+public interface TicketDao extends BasicDao<Ticket> {
   List<Ticket> findAllByScreeningId(UUID id);
 
   Optional<Ticket> findByScreeningAndSeat(UUID screeningId, UUID seatId);

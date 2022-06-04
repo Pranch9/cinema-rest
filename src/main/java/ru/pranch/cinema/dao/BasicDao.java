@@ -2,21 +2,24 @@ package ru.pranch.cinema.dao;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+import org.springframework.stereotype.Repository;
 
-public interface BasicDao<T, ID> {
+@Repository
+public interface BasicDao<T> {
   Optional<T> save(T t);
 
-  Optional<T> update(ID id, T t);
+  Optional<T> update(UUID id, T t);
 
-  Optional<T> findById(ID id);
+  Optional<T> findById(UUID id);
 
-  Optional<T> deleteById(ID id);
+  int deleteById(UUID id);
 
   List<T> saveAll(List<T> items);
 
-  List<T> findAllById(List<ID> ids);
+  List<T> findAllById(List<UUID> ids);
 
   List<T> findAll();
 
-  List<T> deleteAllById(List<ID> ids);
+  int deleteAllById(List<UUID> ids);
 }

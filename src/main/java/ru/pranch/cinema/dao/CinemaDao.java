@@ -1,9 +1,10 @@
 package ru.pranch.cinema.dao;
 
 import java.util.Optional;
-import java.util.UUID;
+import org.springframework.stereotype.Repository;
 import ru.pranch.cinema.model.Cinema;
 
-public interface CinemaDao extends BasicDao<Cinema, UUID> {
+@Repository
+public interface CinemaDao extends BasicDao<Cinema>{
   Optional<Cinema> findByName(String name);
 }

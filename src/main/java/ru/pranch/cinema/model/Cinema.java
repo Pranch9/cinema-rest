@@ -6,12 +6,16 @@ public class Cinema {
   private UUID id;
   private String cinemaName;
 
-  public UUID getId() {
-    return id;
+  public Cinema() {
+    this.id = UUID.randomUUID();
   }
 
   public void setId(UUID id) {
     this.id = id;
+  }
+
+  public UUID getId() {
+    return id;
   }
 
   public String getCinemaName() {

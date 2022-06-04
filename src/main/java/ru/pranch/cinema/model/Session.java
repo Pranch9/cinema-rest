@@ -9,6 +9,10 @@ public class Session {
   private CinemaHall cinemaHall;
   private Date sessionDate;
 
+  public Session() {
+    this.id = UUID.randomUUID();
+  }
+
   public UUID getId() {
     return id;
   }

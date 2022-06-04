@@ -10,6 +10,10 @@ public class CinemaHall {
   private Cinema cinema;
   private Session session;
 
+  public CinemaHall() {
+    this.id = UUID.randomUUID();
+  }
+
   public UUID getId() {
     return id;
   }

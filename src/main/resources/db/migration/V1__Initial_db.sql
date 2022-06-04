@@ -1,7 +1,7 @@
 create table if not exists cinemas
 (
     id          uuid not null primary key,
-    cinema_name varchar(255)
+    cinema_name varchar(255) unique
 );
 
 create table if not exists cinema_halls

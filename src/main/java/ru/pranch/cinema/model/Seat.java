@@ -8,6 +8,10 @@ public class Seat {
   private int place;
   private CinemaHall cinemaHall;
 
+  public Seat() {
+    this.id = UUID.randomUUID();
+  }
+
   public UUID getId() {
     return id;
   }

@@ -11,6 +11,10 @@ public class Ticket {
   private Status status;
   private double price;
 
+  public Ticket() {
+    this.id = UUID.randomUUID();
+  }
+
   public UUID getId() {
     return id;
   }
