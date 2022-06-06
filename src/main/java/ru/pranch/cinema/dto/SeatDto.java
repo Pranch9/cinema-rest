@@ -1,26 +1,13 @@
-package ru.pranch.cinema.model;
+package ru.pranch.cinema.dto;
 
 import java.util.UUID;
 import ru.pranch.cinema.enums.SeatStatus;
 
-public class Seat {
-  private UUID id;
+public class SeatDto {
   private int rowNumber;
   private int place;
   private SeatStatus seatStatus;
   private UUID cinemaHallId;
-
-  public Seat() {
-    this.id = UUID.randomUUID();
-  }
-
-  public UUID getId() {
-    return id;
-  }
-
-  public void setId(UUID id) {
-    this.id = id;
-  }
 
   public int getRowNumber() {
     return rowNumber;
@@ -52,15 +39,5 @@ public class Seat {
 
   public void setCinemaHallId(UUID cinemaHallId) {
     this.cinemaHallId = cinemaHallId;
-  }
-
-  @Override
-  public String toString() {
-    return "Seat{" +
-      "id=" + id +
-      ", rowNumber=" + rowNumber +
-      ", place=" + place +
-      ", cinemaHallId=" + cinemaHallId +
-      '}';
   }
 }

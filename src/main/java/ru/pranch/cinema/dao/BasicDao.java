@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BasicDao<T> {
-  Optional<T> save(T t);
+  T save(T t);
 
   Optional<T> update(UUID id, T t);
 

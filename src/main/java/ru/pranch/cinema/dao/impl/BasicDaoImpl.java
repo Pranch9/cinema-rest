@@ -24,12 +24,12 @@ public abstract class BasicDaoImpl<T> implements BasicDao<T> {
   }
 
   @Override
-  public Optional<T> save(T t) {
+  public T save(T t) {
     return jdbi.withHandle(handle -> handle
       .createUpdate("insert into " + tableName() + " " + columnNamesForSave() + " values " + valuesForSave(t) + ";")
       .executeAndReturnGeneratedKeys()
       .mapToBean(entityType)
-      .findOne());
+      .first());
   }
 
   @Override
@@ -47,7 +47,7 @@ public abstract class BasicDaoImpl<T> implements BasicDao<T> {
   public Optional<T> update(UUID id, T t) {
     return jdbi.withHandle(handle ->
       handle
-        .createUpdate("update " + tableName() + " set " + columnAndValuesForUpdate(t) + " where id = " + id)
+        .createUpdate("update " + tableName() + " set " + columnAndValuesForUpdate(t) + " where id = '" + id + "';")
         .executeAndReturnGeneratedKeys()
         .mapToBean(entityType)
         .findOne());
@@ -57,7 +57,7 @@ public abstract class BasicDaoImpl<T> implements BasicDao<T> {
   public Optional<T> findById(UUID id) {
     return jdbi.withHandle(handle ->
       handle
-        .createQuery("select * from " + tableName() + " where id = :id")
+        .createQuery("select * from " + tableName() + " where id = :id;")
         .bind("id", id)
         .mapToBean(entityType)
         .findOne());
@@ -67,7 +67,7 @@ public abstract class BasicDaoImpl<T> implements BasicDao<T> {
   public List<T> findAllById(List<UUID> ids) {
     return jdbi.withHandle(handle ->
       handle
-        .createQuery("select * from " + tableName() + " where id in (<ids>)")
+        .createQuery("select * from " + tableName() + " where id in (<ids>);")
         .bindList("ids", ids)
         .mapToBean(entityType)
         .list());
@@ -77,7 +77,7 @@ public abstract class BasicDaoImpl<T> implements BasicDao<T> {
   public List<T> findAll() {
     return jdbi.withHandle(handle ->
       handle
-        .createQuery("select * from " + tableName())
+        .createQuery("select * from " + tableName() + ";")
         .mapToBean(entityType)
         .list());
   }
@@ -86,14 +86,14 @@ public abstract class BasicDaoImpl<T> implements BasicDao<T> {
   public int deleteById(UUID id) {
     return jdbi.withHandle(handle ->
       handle
-        .createUpdate("delete from " + tableName() + " where id = " + id)
+        .createUpdate("delete from " + tableName() + " where id = '" + id + "';")
         .execute());
   }
 
   @Override
   public int deleteAllById(List<UUID> ids) {
     return jdbi.withHandle(handle -> handle
-      .createUpdate("delete from " + tableName() + " where id in (<ids>)")
+      .createUpdate("delete from " + tableName() + " where id in (<ids>);")
       .bindList("ids", ids)
       .execute()
     );
@@ -147,7 +147,7 @@ public abstract class BasicDaoImpl<T> implements BasicDao<T> {
         .filter(field -> !field.getName().equalsIgnoreCase("id"))
         .map(field -> {
           field.setAccessible(true);
-          var convertedField = field.getName();
+          String convertedField = field.getName().replaceAll("(([A-Z][a-z])|(\\d{1,}))", "_$1").toLowerCase();
           try {
             if (field.getType().equals(String.class) || field.getType().equals(LocalDateTime.class) ||
               field.getType().isEnum() || field.getType().equals(LocalDate.class)) {

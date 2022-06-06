@@ -17,7 +17,7 @@ public class CinemaHallDaoImpl extends BasicDaoImpl<CinemaHall> implements Cinem
   }
 
   @Override
-  public List<CinemaHall> findAllRoomsFromCinema(UUID cinemaId) {
+  public List<CinemaHall> findAllHallsFromCinema(UUID cinemaId) {
     return null;
   }
 

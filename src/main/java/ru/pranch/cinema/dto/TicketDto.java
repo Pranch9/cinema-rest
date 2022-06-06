@@ -1,27 +1,14 @@
-package ru.pranch.cinema.model;
+package ru.pranch.cinema.dto;
 
 import java.util.UUID;
 import ru.pranch.cinema.enums.Status;
 
-public class Ticket {
-  private UUID id;
+public class TicketDto {
   private UUID sessionId;
   private UUID seatId;
   private UUID userId;
   private Status status;
   private double price;
-
-  public Ticket() {
-    this.id = UUID.randomUUID();
-  }
-
-  public UUID getId() {
-    return id;
-  }
-
-  public void setId(UUID id) {
-    this.id = id;
-  }
 
   public UUID getSessionId() {
     return sessionId;
@@ -47,14 +34,6 @@ public class Ticket {
     this.userId = userId;
   }
 
-  public double getPrice() {
-    return price;
-  }
-
-  public void setPrice(double price) {
-    this.price = price;
-  }
-
   public Status getStatus() {
     return status;
   }
@@ -63,15 +42,11 @@ public class Ticket {
     this.status = status;
   }
 
-  @Override
-  public String toString() {
-    return "Ticket{" +
-      "id=" + id +
-      ", sessionId=" + sessionId +
-      ", seatId=" + seatId +
-      ", userId=" + userId +
-      ", status=" + status +
-      ", price=" + price +
-      '}';
+  public double getPrice() {
+    return price;
+  }
+
+  public void setPrice(double price) {
+    this.price = price;
   }
 }

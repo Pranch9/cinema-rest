@@ -1,25 +1,12 @@
-package ru.pranch.cinema.model;
+package ru.pranch.cinema.dto;
 
 import java.util.UUID;
 
-public class CinemaHall {
-  private UUID id;
+public class CinemaHallDto {
   private String hallName;
   private int rowsNumber;
   private int placeNumber;
   private UUID cinemaId;
-
-  public CinemaHall() {
-    this.id = UUID.randomUUID();
-  }
-
-  public UUID getId() {
-    return id;
-  }
-
-  public void setId(UUID id) {
-    this.id = id;
-  }
 
   public String getHallName() {
     return hallName;
@@ -51,16 +38,5 @@ public class CinemaHall {
 
   public void setCinemaId(UUID cinemaId) {
     this.cinemaId = cinemaId;
-  }
-
-  @Override
-  public String toString() {
-    return "CinemaHall{" +
-      "id=" + id +
-      ", hallName='" + hallName + '\'' +
-      ", rowsNumber=" + rowsNumber +
-      ", placeNumber=" + placeNumber +
-      ", cinemaId=" + cinemaId +
-      '}';
   }
 }

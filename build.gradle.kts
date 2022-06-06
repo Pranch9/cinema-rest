@@ -1,5 +1,6 @@
 val junitJupiterVersion: String by project
 val jdbiVersion: String by project
+val springDocOpenApiVersion: String by project
 
 plugins {
     id("java")
@@ -15,13 +16,13 @@ repositories {
 }
 
 dependencies {
-    implementation ("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springdoc:springdoc-openapi-ui:$springDocOpenApiVersion")
     implementation("org.jdbi:jdbi3-spring5:$jdbiVersion")
-
     implementation("org.flywaydb:flyway-core")
 
-    runtimeOnly ("org.postgresql:postgresql")
-    runtimeOnly ("com.h2database:h2")
+    runtimeOnly("org.postgresql:postgresql")
+    runtimeOnly("com.h2database:h2")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")

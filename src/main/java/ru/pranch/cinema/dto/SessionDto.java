@@ -1,25 +1,12 @@
-package ru.pranch.cinema.model;
+package ru.pranch.cinema.dto;
 
 import java.util.Date;
 import java.util.UUID;
 
-public class Session {
-  private UUID id;
+public class SessionDto {
   private UUID movieId;
   private UUID cinemaHallId;
   private Date sessionDate;
-
-  public Session() {
-    this.id = UUID.randomUUID();
-  }
-
-  public UUID getId() {
-    return id;
-  }
-
-  public void setId(UUID id) {
-    this.id = id;
-  }
 
   public UUID getMovieId() {
     return movieId;
@@ -43,15 +30,5 @@ public class Session {
 
   public void setSessionDate(Date sessionDate) {
     this.sessionDate = sessionDate;
-  }
-
-  @Override
-  public String toString() {
-    return "Session{" +
-      "id=" + id +
-      ", movieId=" + movieId +
-      ", cinemaHallId=" + cinemaHallId +
-      ", date=" + sessionDate +
-      '}';
   }
 }

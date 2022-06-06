@@ -10,8 +10,8 @@ create table if not exists cinema_halls
     hall_name    varchar(255),
     rows_number  integer,
     place_number integer,
-    cinema_id    uuid not null references cinemas (id),
-    constraint cinema_halls_cinema_id_key unique (cinema_id)
+    cinema_id    uuid not null,
+    constraint cinema_halls_cinema_id_fkey foreign key (cinema_id) references cinemas (id)
 );
 
 create table if not exists movies
@@ -35,18 +35,18 @@ create table if not exists seats
     id             uuid    not null primary key,
     row_number     integer not null,
     place          integer not null,
-    cinema_hall_id uuid    not null references cinema_halls (id),
-    constraint seats_cinema_hall_id_key unique (cinema_hall_id)
+    cinema_hall_id uuid    not null,
+    constraint seats_cinema_hall_id_fkey foreign key (cinema_hall_id) references cinema_halls (id)
 );
 
 create table if not exists sessions
 (
     id             uuid not null primary key,
-    movie_id       uuid not null references movies (id),
-    constraint sessions_movie_id_key unique (movie_id),
-    cinema_hall_id uuid not null references cinema_halls (id),
-    constraint sessions_cinema_hall_id_key unique (cinema_hall_id),
-    session_date  date
+    movie_id       uuid not null,
+    constraint sessions_movie_id_fkey foreign key (movie_id) references movies (id),
+    cinema_hall_id uuid not null,
+    constraint sessions_cinema_hall_id_fkey foreign key (cinema_hall_id) references cinema_halls (id),
+    session_date   date
 );
 
 create table if not exists tickets
