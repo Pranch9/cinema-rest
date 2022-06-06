@@ -20,7 +20,9 @@ public class CinemaDaoImpl extends BasicDaoImpl<Cinema> implements CinemaDao {
   public Optional<Cinema> findByName(String name) {
     return jdbi.withHandle(handle ->
       handle
-        .createQuery("select * from " + " " + TableName.CINEMA.getDbTableName() + " where cinema_name = :cinemaName")
+        .createQuery("select * " +
+          "from " + " " + TableName.CINEMA.getDbTableName() + " " +
+          "where cinema_name = :cinemaName")
         .bind("cinemaName", name)
         .mapToBean(Cinema.class)
         .findOne());

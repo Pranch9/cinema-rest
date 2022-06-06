@@ -6,6 +6,4 @@ import ru.pranch.cinema.model.CinemaHall;
 
 public interface CinemaHallDao extends BasicDao<CinemaHall> {
   List<CinemaHall> findAllHallsFromCinema(UUID cinemaId);
-
-  List<UUID> findAllIdsFromCinema(UUID cinemaId);
 }

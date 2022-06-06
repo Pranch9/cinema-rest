@@ -17,15 +17,15 @@ create table if not exists cinema_halls
 create table if not exists movies
 (
     id          uuid not null primary key,
-    title       varchar(255),
+    title       varchar(255) unique,
     movie_genre varchar(255)
 );
 
 create table if not exists users
 (
     id            uuid         not null primary key,
-    username      varchar(255) not null,
-    mail          varchar(255),
+    username      varchar(255) not null unique ,
+    mail          varchar(255) not null unique ,
     password      varchar(255) not null,
     creation_date date         not null
 );
