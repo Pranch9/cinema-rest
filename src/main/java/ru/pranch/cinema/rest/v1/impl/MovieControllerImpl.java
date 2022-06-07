@@ -28,8 +28,8 @@ public class MovieControllerImpl implements IMovieController {
   @Override
   public ResponseEntity<Movie> getMovie(UUID id) {
     return movieService.getMovieById(id)
-      .map(ResponseEntity::ok)
-      .orElseGet(() -> ResponseEntity.notFound().build());
+        .map(ResponseEntity::ok)
+        .orElseGet(() -> ResponseEntity.notFound().build());
   }
 
   @Override
@@ -40,20 +40,15 @@ public class MovieControllerImpl implements IMovieController {
   @Override
   public ResponseEntity<Movie> editMovie(MovieDto movieDto, UUID id) throws Exception {
     return movieService.editMovie(id, movieDto)
-      .map(ResponseEntity::ok)
-      .orElseGet(() -> ResponseEntity.notFound().build());
-  }
-
-  @Override
-  public ResponseEntity<List<Movie>> addMovies(List<MovieDto> moviesDto) {
-    return ResponseEntity.ok(movieService.addMovies(moviesDto));
+        .map(ResponseEntity::ok)
+        .orElseGet(() -> ResponseEntity.notFound().build());
   }
 
   @Override
   public ResponseEntity<Movie> getMovieByTitle(String title) {
     return movieService.getMovieByTitle(title)
-      .map(ResponseEntity::ok)
-      .orElseGet(() -> ResponseEntity.notFound().build());
+        .map(ResponseEntity::ok)
+        .orElseGet(() -> ResponseEntity.notFound().build());
   }
 
   @Override

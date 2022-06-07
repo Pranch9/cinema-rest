@@ -1,6 +1,5 @@
 package ru.pranch.cinema.rest.v1.api;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.http.MediaType;
@@ -16,32 +15,29 @@ import ru.pranch.cinema.dto.MovieDto;
 import ru.pranch.cinema.enums.MovieGenre;
 import ru.pranch.cinema.model.Movie;
 
-@RequestMapping(value = "/api/v1")
+@RequestMapping(value = "/api/v1/movies")
 public interface IMovieController {
-  @GetMapping(value = "/movies", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<List<Movie>> getMovies();
 
-  @GetMapping(value = "/movie/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<Movie> getMovie(@PathVariable UUID id);
 
-  @PostMapping(value = "/movie/add", consumes = MediaType.APPLICATION_JSON_VALUE,
-    produces = MediaType.APPLICATION_JSON_VALUE)
-  ResponseEntity<Movie> addMovie(@RequestBody MovieDto movieDto) throws Exception;
-
-  @PutMapping(value = "/movie/edit/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
-    produces = MediaType.APPLICATION_JSON_VALUE)
-  ResponseEntity<Movie> editMovie(@RequestBody MovieDto movieDto, @PathVariable UUID id) throws Exception;
-
-  @PostMapping(value = "/movies/add")
-  ResponseEntity<List<Movie>> addMovies(@RequestBody List<MovieDto> moviesDto);
-
-  @GetMapping(value = "/movies/{title}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/{title}", produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<Movie> getMovieByTitle(@PathVariable String title);
 
-  @GetMapping(value = "/movies/genre/{genre}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/genre/{genre}", produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<List<Movie>> getMoviesByGenre(@PathVariable MovieGenre genre);
 
-  @DeleteMapping(value = "/movie/{id}")
+  @PostMapping(value = "/control", consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  ResponseEntity<Movie> addMovie(@RequestBody MovieDto movieDto) throws Exception;
+
+  @PutMapping(value = "/control/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  ResponseEntity<Movie> editMovie(@RequestBody MovieDto movieDto, @PathVariable UUID id) throws Exception;
+
+  @DeleteMapping(value = "/control/{id}")
   ResponseEntity<Integer> deleteMovie(@PathVariable UUID id);
 
 }

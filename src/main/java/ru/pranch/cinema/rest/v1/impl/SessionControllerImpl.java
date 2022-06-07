@@ -1,11 +1,13 @@
 package ru.pranch.cinema.rest.v1.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.pranch.cinema.dto.SessionDto;
+import ru.pranch.cinema.dto.SessionInfoDto;
 import ru.pranch.cinema.model.Session;
 import ru.pranch.cinema.rest.v1.api.ISessionController;
 import ru.pranch.cinema.services.SessionService;
@@ -32,6 +34,11 @@ public class SessionControllerImpl implements ISessionController {
   }
 
   @Override
+  public ResponseEntity<SessionInfoDto> getSessionInfoByDate(Date date) {
+    return null;
+  }
+
+  @Override
   public ResponseEntity<Session> addSession(SessionDto sessionDto) {
     try {
       return ResponseEntity.ok(sessionService.addSession(sessionDto));
@@ -52,11 +59,7 @@ public class SessionControllerImpl implements ISessionController {
   }
 
   @Override
-  public ResponseEntity<List<Session>> addSessions(List<SessionDto> sessionsDto) {
-    try {
-      return ResponseEntity.ok(sessionService.addSessions(sessionsDto));
-    } catch (Exception e) {
-      return ResponseEntity.unprocessableEntity().build();
-    }
+  public ResponseEntity<Session> deleteSession(UUID id) {
+    return null;
   }
 }

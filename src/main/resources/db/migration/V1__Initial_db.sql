@@ -1,6 +1,15 @@
+create table if not exists addresses
+(
+    id          uuid not null primary key,
+    cinema_name varchar(255) unique
+);
+
+
 create table if not exists cinemas
 (
     id          uuid not null primary key,
+    address_id  uuid not null references addresses (id),
+    constraint cinemas_address_id_key unique (address_id),
     cinema_name varchar(255) unique
 );
 

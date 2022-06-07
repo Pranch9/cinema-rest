@@ -4,10 +4,19 @@ import java.util.UUID;
 
 public class Cinema {
   private UUID id;
+  private UUID addressId;
   private String cinemaName;
 
   public Cinema() {
     this.id = UUID.randomUUID();
+  }
+
+  public UUID getAddressId() {
+    return addressId;
+  }
+
+  public void setAddressId(UUID addressId) {
+    this.addressId = addressId;
   }
 
   public void setId(UUID id) {
@@ -29,8 +38,9 @@ public class Cinema {
   @Override
   public String toString() {
     return "Cinema{" +
-      "id=" + id +
-      ", cinemaName='" + cinemaName + '\'' +
-      '}';
+        "id=" + id +
+        ", addressId=" + addressId +
+        ", cinemaName='" + cinemaName + '\'' +
+        '}';
   }
 }

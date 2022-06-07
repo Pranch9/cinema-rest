@@ -5,12 +5,18 @@ import java.util.Optional;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.pranch.cinema.dao.AddressDao;
 import ru.pranch.cinema.dao.CinemaDao;
 import ru.pranch.cinema.dao.CinemaHallDao;
+import ru.pranch.cinema.dao.CinemaInfoDao;
 import ru.pranch.cinema.dao.SeatDao;
 import ru.pranch.cinema.dao.SessionDao;
 import ru.pranch.cinema.dto.CinemaDto;
+import ru.pranch.cinema.dto.CinemaInfoDto;
+import ru.pranch.cinema.dto.CreateAddressDto;
+import ru.pranch.cinema.mapper.AddressMapper;
 import ru.pranch.cinema.mapper.CinemaMapper;
+import ru.pranch.cinema.model.Address;
 import ru.pranch.cinema.model.Cinema;
 import ru.pranch.cinema.model.CinemaHall;
 import ru.pranch.cinema.model.Seat;
@@ -18,14 +24,18 @@ import ru.pranch.cinema.model.Session;
 
 @Service
 public class CinemaService {
+  private final AddressDao addressDao;
   private final CinemaDao cinemaDao;
+  private final CinemaInfoDao cinemaInfoDao;
   private final CinemaHallDao cinemaHallDao;
   private final SeatDao seatDao;
   private final SessionDao sessionDao;
 
   @Autowired
-  public CinemaService(CinemaDao cinemaDao, CinemaHallDao cinemaHallDao, SeatDao seatDao, SessionDao sessionDao) {
+  public CinemaService(AddressDao addressDao, CinemaDao cinemaDao, CinemaInfoDao cinemaInfoDao, CinemaHallDao cinemaHallDao, SeatDao seatDao, SessionDao sessionDao) {
+    this.addressDao = addressDao;
     this.cinemaDao = cinemaDao;
+    this.cinemaInfoDao = cinemaInfoDao;
     this.cinemaHallDao = cinemaHallDao;
     this.seatDao = seatDao;
     this.sessionDao = sessionDao;
@@ -54,8 +64,8 @@ public class CinemaService {
    * @param name название кинотеатра для поиска.
    * @return кинотеатр с данным именем.
    */
-  public Optional<Cinema> getCinemaByName(String name) {
-    return cinemaDao.findByName(name);
+  public Optional<CinemaInfoDto> getCinemaByName(String name) {
+    return cinemaInfoDao.findByName(name);
   }
 
   /**
@@ -68,7 +78,16 @@ public class CinemaService {
     if (cinemaDao.findByName(cinema.getCinemaName()).isPresent()) {
       throw new Exception("Movie with title = {" + cinema.getCinemaName() + "} already exist!");
     }
-    return cinemaDao.save(CinemaMapper.mapCinema(cinema));
+    CreateAddressDto createAddressDto = cinema.getCreateAddressDto();
+    Address addressFromDb = addressDao
+        .findAddress(createAddressDto.getStreet(), createAddressDto.getHouseNumber(), createAddressDto.getCity(), createAddressDto.getZipCode())
+        .orElseGet(() -> addressDao
+            .save(AddressMapper.mapAddress(createAddressDto)));
+
+    Cinema mapCinema = CinemaMapper.mapCinema(cinema);
+    mapCinema.setAddressId(addressFromDb.getId());
+
+    return cinemaDao.save(mapCinema);
   }
 
   /**

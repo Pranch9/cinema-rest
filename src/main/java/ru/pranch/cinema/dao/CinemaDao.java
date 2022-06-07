@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import ru.pranch.cinema.model.Cinema;
 
 @Repository
-public interface CinemaDao extends BasicDao<Cinema>{
+public interface CinemaDao extends BasicDao<Cinema> {
   Optional<Cinema> findByName(String name);
 }

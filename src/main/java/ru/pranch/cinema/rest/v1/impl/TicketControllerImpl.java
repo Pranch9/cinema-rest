@@ -32,15 +32,15 @@ public class TicketControllerImpl implements ITicketController {
   }
 
   @Override
-  public ResponseEntity<Ticket> addTicket(TicketDto ticketDto) {
-    return ResponseEntity.ok(ticketService.addTicket(ticketDto));
-  }
-
-  @Override
   public ResponseEntity<Ticket> editTicket(TicketDto ticketDto, UUID id) {
     return ticketService.editTicket(id, ticketDto)
       .map(ResponseEntity::ok)
       .orElseGet(() -> ResponseEntity.notFound().build());
+  }
+
+  @Override
+  public ResponseEntity<Ticket> deleteTicket(TicketDto ticketDto, UUID id) {
+    return null;
   }
 
   @Override
