@@ -24,7 +24,7 @@ public class SessionDaoImpl extends BasicDaoImpl<Session> implements SessionDao 
     return jdbi.withHandle(handle ->
       handle.createQuery("select * " +
           "from " + TableName.SESSION.getDbTableName() + " " +
-          "where movie_id = :movieId")
+          "where movie_id = :movieId;")
         .bind("movieId", movieId)
         .mapToBean(Session.class)
         .list());
@@ -35,9 +35,20 @@ public class SessionDaoImpl extends BasicDaoImpl<Session> implements SessionDao 
     return jdbi.withHandle(handle ->
       handle.createQuery("select * " +
           "from " + TableName.SESSION.getDbTableName() + " " +
-          "where cinema_room_id = :cinemaRoomId and session_date = :sessionDate")
+          "where cinema_room_id = :cinemaRoomId and session_date = :sessionDate;")
         .bind("cinemaRoomId", cinemaRoomId)
         .bind("sessionDate", sessionDate)
+        .mapToBean(Session.class)
+        .list());
+  }
+
+  @Override
+  public List<Session> findAllByCinemaRoomId(UUID cinemaRoomId) {
+    return jdbi.withHandle(handle ->
+      handle.createQuery("select * " +
+          "from " + TableName.SESSION.getDbTableName() + " " +
+          "where cinema_room_id = :cinemaRoomId;")
+        .bind("cinemaRoomId", cinemaRoomId)
         .mapToBean(Session.class)
         .list());
   }

@@ -24,8 +24,8 @@ create table if not exists movies
 create table if not exists users
 (
     id            uuid         not null primary key,
-    username      varchar(255) not null unique ,
-    mail          varchar(255) not null unique ,
+    username      varchar(255) not null unique,
+    mail          varchar(255) not null unique,
     password      varchar(255) not null,
     creation_date date         not null
 );

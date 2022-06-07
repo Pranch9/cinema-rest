@@ -5,5 +5,5 @@ import java.util.UUID;
 import ru.pranch.cinema.model.Seat;
 
 public interface SeatDao extends BasicDao<Seat> {
-  List<Seat> findSeatsByCinemaRoom(UUID cinemaRoomId);
+  List<Seat> findSeatsByCinemaHall(UUID cinemaRoomId);
 }

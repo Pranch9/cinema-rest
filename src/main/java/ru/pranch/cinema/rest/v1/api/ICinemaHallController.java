@@ -21,18 +21,14 @@ public interface ICinemaHallController {
   @GetMapping(value = "/cinemaHall/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<CinemaHall> getCinemaHall(@PathVariable UUID id);
 
-  @PostMapping(value = "/cinemaHall/add", consumes = MediaType.APPLICATION_JSON_VALUE,
-    produces = MediaType.APPLICATION_JSON_VALUE)
-  ResponseEntity<CinemaHall> addCinemaHall(@RequestBody CinemaHallDto cinemaHallDto);
-
   @PutMapping(value = "/cinemaHall/edit/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<CinemaHall> editCinemaHall(@RequestBody CinemaHallDto cinemaHallDto, @PathVariable UUID id);
 
-  @PostMapping(value = "/cinemaHalls/add")
-  ResponseEntity<List<CinemaHall>> addCinemaHalls(@RequestBody List<CinemaHallDto> cinemaHallsDto);
-
   @GetMapping("/cinemaHalls/{cinemaId}")
   ResponseEntity<List<CinemaHall>> getCinemaHallsByCinemaId(@PathVariable UUID cinemaId);
 
+  @PostMapping(value = "/cinemaHalls/add", consumes = MediaType.APPLICATION_JSON_VALUE,
+    produces = MediaType.APPLICATION_JSON_VALUE)
+  ResponseEntity<List<CinemaHall>> addCinemaHallsToCinema(@RequestBody List<CinemaHallDto> cinemaHallsDto) throws Exception;
 }

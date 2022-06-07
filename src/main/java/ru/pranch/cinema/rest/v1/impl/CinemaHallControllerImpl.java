@@ -30,11 +30,6 @@ public class CinemaHallControllerImpl implements ICinemaHallController {
   }
 
   @Override
-  public ResponseEntity<CinemaHall> addCinemaHall(CinemaHallDto cinemaHallDto) {
-    return ResponseEntity.ok(cinemaHallService.addCinemaHall(cinemaHallDto));
-  }
-
-  @Override
   public ResponseEntity<CinemaHall> editCinemaHall(CinemaHallDto cinemaHallDto, UUID id) {
     return cinemaHallService.editCinemaHall(id, cinemaHallDto)
       .map(ResponseEntity::ok)
@@ -42,12 +37,12 @@ public class CinemaHallControllerImpl implements ICinemaHallController {
   }
 
   @Override
-  public ResponseEntity<List<CinemaHall>> addCinemaHalls(List<CinemaHallDto> cinemaHallsDto) {
-    return ResponseEntity.ok(cinemaHallService.addCinemaHalls(cinemaHallsDto));
+  public ResponseEntity<List<CinemaHall>> getCinemaHallsByCinemaId(UUID cinemaId) {
+    return ResponseEntity.ok(cinemaHallService.getCinemaHallsByCinemaId(cinemaId));
   }
 
   @Override
-  public ResponseEntity<List<CinemaHall>> getCinemaHallsByCinemaId(UUID cinemaId) {
-    return ResponseEntity.ok(cinemaHallService.getCinemaHallsByCinemaId(cinemaId));
+  public ResponseEntity<List<CinemaHall>> addCinemaHallsToCinema(List<CinemaHallDto> cinemaHallsDto) throws Exception {
+    return ResponseEntity.ok(cinemaHallService.addCinemaHallsToCinema(cinemaHallsDto));
   }
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,15 +24,20 @@ public interface ICinemaController {
 
   @PostMapping(value = "/cinema/add", consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE)
-  ResponseEntity<Cinema> addCinema(@RequestBody CinemaDto cinemaDto);
+  ResponseEntity<Cinema> addCinema(@RequestBody CinemaDto cinemaDto) throws Exception;
 
   @PutMapping(value = "/cinema/edit/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE)
-  ResponseEntity<Cinema> editCinema(@RequestBody CinemaDto cinemaDto, @PathVariable UUID id);
+  ResponseEntity<Cinema> editCinema(@RequestBody CinemaDto cinemaDto, @PathVariable UUID id) throws Exception;
 
-  @GetMapping(value = "/cinema/{name}")
+  @GetMapping(value = "/cinema/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<Cinema> getCinemaByName(@PathVariable String name);
 
-  @PostMapping(value = "/cinemas/add")
+  @PostMapping(value = "/cinemas/add", consumes = MediaType.APPLICATION_JSON_VALUE,
+    produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<List<Cinema>> addCinemas(@RequestBody List<CinemaDto> cinemas);
+
+  @DeleteMapping(value = "/cinema/{id}")
+  ResponseEntity<Integer> deleteCinema(@PathVariable UUID id);
+
 }

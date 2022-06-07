@@ -1,12 +1,10 @@
 package ru.pranch.cinema.dto;
 
 import java.util.UUID;
-import ru.pranch.cinema.enums.SeatStatus;
 
 public class SeatDto {
   private int rowNumber;
   private int place;
-  private SeatStatus seatStatus;
   private UUID cinemaHallId;
 
   public int getRowNumber() {
@@ -23,14 +21,6 @@ public class SeatDto {
 
   public void setPlace(int place) {
     this.place = place;
-  }
-
-  public SeatStatus getSeatStatus() {
-    return seatStatus;
-  }
-
-  public void setSeatStatus(SeatStatus seatStatus) {
-    this.seatStatus = seatStatus;
   }
 
   public UUID getCinemaHallId() {

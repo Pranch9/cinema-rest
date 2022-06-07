@@ -18,11 +18,11 @@ public class SeatDaoImpl extends BasicDaoImpl<Seat> implements SeatDao {
   }
 
   @Override
-  public List<Seat> findSeatsByCinemaRoom(UUID cinemaRoomId) {
+  public List<Seat> findSeatsByCinemaHall(UUID cinemaRoomId) {
     return jdbi.withHandle(handle ->
       handle.createQuery("select * " +
           "from " + TableName.SEAT.getDbTableName() + " " +
-          "where cinema_room_id = :cinemaRoomId")
+          "where cinema_room_id = :cinemaRoomId;")
         .bind("cinemaRoomId", cinemaRoomId)
         .mapToBean(Seat.class)
         .list());

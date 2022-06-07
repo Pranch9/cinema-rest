@@ -9,4 +9,6 @@ public interface SessionDao extends BasicDao<Session> {
   List<Session> findAllByMovieId(UUID movieId);
 
   List<Session> findAllByCinemaRoomAndDate(UUID cinemaRoomId, Date sessionDate);
+
+  List<Session> findAllByCinemaRoomId(UUID cinemaRoomId);
 }

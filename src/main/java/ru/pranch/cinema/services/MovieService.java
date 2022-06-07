@@ -36,7 +36,10 @@ public class MovieService {
     return movieDao.findMoviesByGenre(movieGenre);
   }
 
-  public Movie addMovie(MovieDto movie) {
+  public Movie addMovie(MovieDto movie) throws Exception {
+    if (movieDao.findByTitle(movie.getTitle()).isPresent()) {
+      throw new Exception("Movie with title = {" + movie.getTitle() + "} already exist!");
+    }
     return movieDao.save(MovieMapper.mapMovie(movie));
   }
 
@@ -47,7 +50,14 @@ public class MovieService {
       .toList());
   }
 
-  public Optional<Movie> editMovie(UUID id, MovieDto movie) {
+  public Optional<Movie> editMovie(UUID id, MovieDto movie) throws Exception {
+    if (movieDao.findByTitle(movie.getTitle()).isPresent()) {
+      throw new Exception("Movie with title = {" + movie.getTitle() + "} already exist!");
+    }
     return movieDao.update(id, MovieMapper.mapMovie(movie));
+  }
+
+  public int deleteMovie(UUID id) {
+    return 0;
   }
 }
