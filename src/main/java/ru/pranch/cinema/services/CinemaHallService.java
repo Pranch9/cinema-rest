@@ -33,8 +33,8 @@ public class CinemaHallService {
     if (cinemaHallsDto.isEmpty())
       throw new Exception();
     List<CinemaHall> cinemaHalls = cinemaHallDao.saveAll(cinemaHallsDto
-      .stream()
-      .map(CinemaHallMapper::mapCinemaHall).toList());
+        .stream()
+        .map(CinemaHallMapper::mapCinemaHall).toList());
 
     cinemaHalls.forEach(this::addSeatsToCinemaHall);
 

@@ -27,24 +27,36 @@ public class SessionControllerImpl implements ISessionController {
   @Override
   public ResponseEntity<Session> getSession(UUID id) {
     return sessionService.getSessionById(id)
-      .map(ResponseEntity::ok)
-      .orElseGet(() -> ResponseEntity.notFound().build());
+        .map(ResponseEntity::ok)
+        .orElseGet(() -> ResponseEntity.notFound().build());
   }
 
   @Override
   public ResponseEntity<Session> addSession(SessionDto sessionDto) {
-    return ResponseEntity.ok(sessionService.addSession(sessionDto));
+    try {
+      return ResponseEntity.ok(sessionService.addSession(sessionDto));
+    } catch (Exception e) {
+      return ResponseEntity.unprocessableEntity().build();
+    }
   }
 
   @Override
   public ResponseEntity<Session> editSession(SessionDto sessionDto, UUID id) {
-    return sessionService.editSession(id, sessionDto)
-      .map(ResponseEntity::ok)
-      .orElseGet(() -> ResponseEntity.notFound().build());
+    try {
+      return sessionService.editSession(id, sessionDto)
+          .map(ResponseEntity::ok)
+          .orElseGet(() -> ResponseEntity.notFound().build());
+    } catch (Exception e) {
+      return ResponseEntity.unprocessableEntity().build();
+    }
   }
 
   @Override
   public ResponseEntity<List<Session>> addSessions(List<SessionDto> sessionsDto) {
-    return ResponseEntity.ok(sessionService.addSessions(sessionsDto));
+    try {
+      return ResponseEntity.ok(sessionService.addSessions(sessionsDto));
+    } catch (Exception e) {
+      return ResponseEntity.unprocessableEntity().build();
+    }
   }
 }

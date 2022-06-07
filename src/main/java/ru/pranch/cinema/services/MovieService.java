@@ -45,9 +45,9 @@ public class MovieService {
 
   public List<Movie> addMovies(List<MovieDto> movies) {
     return movieDao.saveAll(movies
-      .stream()
-      .map(MovieMapper::mapMovie)
-      .toList());
+        .stream()
+        .map(MovieMapper::mapMovie)
+        .toList());
   }
 
   public Optional<Movie> editMovie(UUID id, MovieDto movie) throws Exception {
@@ -58,6 +58,6 @@ public class MovieService {
   }
 
   public int deleteMovie(UUID id) {
-    return 0;
+    return movieDao.deleteById(id);
   }
 }

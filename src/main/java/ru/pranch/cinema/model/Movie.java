@@ -7,6 +7,7 @@ public class Movie {
   private UUID id;
   private String title;
   private MovieGenre movieGenre;
+  private int length;
 
   public Movie() {
     this.id = UUID.randomUUID();
@@ -36,12 +37,21 @@ public class Movie {
     this.movieGenre = movieGenre;
   }
 
+  public int getLength() {
+    return length;
+  }
+
+  public void setLength(int length) {
+    this.length = length;
+  }
+
   @Override
   public String toString() {
     return "Movie{" +
-      "id=" + id +
-      ", title='" + title + '\'' +
-      ", movieGenre=" + movieGenre +
-      '}';
+        "id=" + id +
+        ", title='" + title + '\'' +
+        ", movieGenre=" + movieGenre +
+        ", length=" + length +
+        '}';
   }
 }

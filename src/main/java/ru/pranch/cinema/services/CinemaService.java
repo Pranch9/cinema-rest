@@ -79,9 +79,9 @@ public class CinemaService {
    */
   public List<Cinema> addCinemas(List<CinemaDto> cinemas) {
     return cinemaDao.saveAll(cinemas
-      .stream()
-      .map(CinemaMapper::mapCinema)
-      .toList());
+        .stream()
+        .map(CinemaMapper::mapCinema)
+        .toList());
   }
 
   /**
@@ -107,20 +107,20 @@ public class CinemaService {
 
   public int deleteCinema(UUID cinemaId) {
     List<UUID> cinemaHallsIds = cinemaHallDao.findAllHallsFromCinema(cinemaId)
-      .stream()
-      .map(CinemaHall::getId)
-      .toList();
+        .stream()
+        .map(CinemaHall::getId)
+        .toList();
     cinemaHallsIds
-      .forEach(ch -> {
-        seatDao.deleteAllById(seatDao.findSeatsByCinemaHall(ch)
-          .stream()
-          .map(Seat::getId)
-          .toList());
-        sessionDao.deleteAllById(sessionDao.findAllByCinemaRoomId(ch)
-          .stream()
-          .map(Session::getId)
-          .toList());
-      });
+        .forEach(ch -> {
+          seatDao.deleteAllById(seatDao.findSeatsByCinemaHall(ch)
+              .stream()
+              .map(Seat::getId)
+              .toList());
+          sessionDao.deleteAllById(sessionDao.findAllByCinemaRoomId(ch)
+              .stream()
+              .map(Session::getId)
+              .toList());
+        });
 
     cinemaHallDao.deleteAllById(cinemaHallsIds);
 
