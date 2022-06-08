@@ -1,12 +1,20 @@
-package ru.pranch.cinema.dto;
+package ru.pranch.cinema.dto.cinema_hall;
 
 import java.util.UUID;
 
-public class CinemaHallDto {
+public class UpdateCinemaHallDto {
+  private UUID id;
   private String hallName;
   private int rowsNumber;
   private int placeNumber;
-  private UUID cinemaId;
+
+  public UUID getId() {
+    return id;
+  }
+
+  public void setId(UUID id) {
+    this.id = id;
+  }
 
   public String getHallName() {
     return hallName;
@@ -30,13 +38,5 @@ public class CinemaHallDto {
 
   public void setPlaceNumber(int placeNumber) {
     this.placeNumber = placeNumber;
-  }
-
-  public UUID getCinemaId() {
-    return cinemaId;
-  }
-
-  public void setCinemaId(UUID cinemaId) {
-    this.cinemaId = cinemaId;
   }
 }

@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.pranch.cinema.dto.CinemaDto;
-import ru.pranch.cinema.dto.CinemaInfoDto;
+import ru.pranch.cinema.dto.cinema.CreateCinemaDto;
+import ru.pranch.cinema.dto.cinema.CinemaInfoDto;
+import ru.pranch.cinema.dto.cinema.UpdateCinemaDto;
 import ru.pranch.cinema.model.Cinema;
 
 @RequestMapping(value = "/api/v1/cinemas")
@@ -31,11 +32,11 @@ public interface ICinemaController {
 
   @PostMapping(value = "/control", consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  ResponseEntity<Cinema> addCinema(@RequestBody CinemaDto cinemaDto);
+  ResponseEntity<Cinema> addCinema(@RequestBody CreateCinemaDto createCinemaDto);
 
   @PutMapping(value = "/control/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  ResponseEntity<Cinema> editCinema(@RequestBody CinemaDto cinemaDto, @PathVariable UUID id);
+  ResponseEntity<Cinema> editCinema(@RequestBody UpdateCinemaDto updateCinemaDto, @PathVariable UUID id);
 
   @DeleteMapping(value = "/control/{id}")
   ResponseEntity<Integer> deleteCinema(@PathVariable UUID id);

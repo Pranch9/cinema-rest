@@ -31,13 +31,13 @@ public interface IMovieController {
 
   @PostMapping(value = "/control", consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  ResponseEntity<Movie> addMovie(@RequestBody MovieDto movieDto) throws Exception;
+  ResponseEntity<List<Movie>> addMovies(@RequestBody List<MovieDto> moviesDto);
 
   @PutMapping(value = "/control/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  ResponseEntity<Movie> editMovie(@RequestBody MovieDto movieDto, @PathVariable UUID id) throws Exception;
+  ResponseEntity<Movie> editMovie(@RequestBody MovieDto movieDto, @PathVariable UUID id);
 
-  @DeleteMapping(value = "/control/{id}")
-  ResponseEntity<Integer> deleteMovie(@PathVariable UUID id);
+  @DeleteMapping(value = "/control")
+  ResponseEntity<Integer> deleteMovies(@RequestBody List<UUID> ids);
 
 }

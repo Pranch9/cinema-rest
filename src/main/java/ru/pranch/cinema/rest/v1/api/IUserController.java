@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,22 +14,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ru.pranch.cinema.dto.UserDto;
 import ru.pranch.cinema.model.User;
 
-@RequestMapping(value = "/api/v1")
+@RequestMapping(value = "/api/v1/users")
 public interface IUserController {
-  @GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<List<User>> getUsers();
 
-  @GetMapping(value = "/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<User> getUser(@PathVariable UUID id);
 
-  @PostMapping(value = "/user/add", consumes = MediaType.APPLICATION_JSON_VALUE,
-    produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/username/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+  ResponseEntity<User> getUserByUsername(@PathVariable String username);
+
+  @GetMapping(value = "/mail/{mail}", produces = MediaType.APPLICATION_JSON_VALUE)
+  ResponseEntity<User> getUserByMail(@PathVariable String mail);
+
+  @PostMapping(value = "/control", consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<User> addUser(@RequestBody UserDto userDto);
 
-  @PutMapping(value = "/user/edit/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
-    produces = MediaType.APPLICATION_JSON_VALUE)
+  @PutMapping(value = "/control/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<User> editUser(@RequestBody UserDto userDto, @PathVariable UUID id);
 
-  @PostMapping(value = "/users/add")
-  ResponseEntity<List<User>> addUsers(@RequestBody List<UserDto> usersDto);
+  @DeleteMapping(value = "/control/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  ResponseEntity<Integer> deleteUser(@PathVariable UUID id);
+
 }

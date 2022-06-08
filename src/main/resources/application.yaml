@@ -4,13 +4,13 @@ server:
 spring:
   flyway:
     enabled: true
-    url: jdbc:postgresql://localhost:5432/cinema_db
-    user: admin
-    password: admin
+    url: jdbc:postgresql://10.40.1.9:5432/cinema_db
+    user: postgres
+    password: postgres
   datasource:
-    url: jdbc:postgresql://localhost:5432/cinema_db
-    username: admin
-    password: admin
+    url: jdbc:postgresql://10.40.1.9:5432/cinema_db
+    username: postgres
+    password: postgres
     driver-class-name: org.postgresql.Driver
 
 ---

@@ -11,9 +11,12 @@ import ru.pranch.cinema.dao.CinemaHallDao;
 import ru.pranch.cinema.dao.CinemaInfoDao;
 import ru.pranch.cinema.dao.SeatDao;
 import ru.pranch.cinema.dao.SessionDao;
-import ru.pranch.cinema.dto.CinemaDto;
-import ru.pranch.cinema.dto.CinemaInfoDto;
 import ru.pranch.cinema.dto.CreateAddressDto;
+import ru.pranch.cinema.dto.cinema.CinemaInfoDto;
+import ru.pranch.cinema.dto.cinema.CreateCinemaDto;
+import ru.pranch.cinema.dto.cinema.UpdateCinemaDto;
+import ru.pranch.cinema.dto.cinema_hall.CreateCinemaHallDto;
+import ru.pranch.cinema.dto.cinema_hall.UpdateCinemaHallDto;
 import ru.pranch.cinema.mapper.AddressMapper;
 import ru.pranch.cinema.mapper.CinemaMapper;
 import ru.pranch.cinema.model.Address;
@@ -74,7 +77,7 @@ public class CinemaService {
    * @param cinema кинотеатр для создания.
    * @return созданный кинотеатр.
    */
-  public Cinema addCinema(CinemaDto cinema) throws Exception {
+  public Cinema addCinema(CreateCinemaDto cinema) throws Exception {
     if (cinemaDao.findByName(cinema.getCinemaName()).isPresent()) {
       throw new Exception("Movie with title = {" + cinema.getCinemaName() + "} already exist!");
     }
@@ -87,20 +90,11 @@ public class CinemaService {
     Cinema mapCinema = CinemaMapper.mapCinema(cinema);
     mapCinema.setAddressId(addressFromDb.getId());
 
-    return cinemaDao.save(mapCinema);
-  }
+    Cinema cinemaFromDb = cinemaDao.save(mapCinema);
 
-  /**
-   * Метод используется для создания/добавления списка кинотетров.
-   *
-   * @param cinemas список кинотеатров для создания.
-   * @return список созданных кинотеатров.
-   */
-  public List<Cinema> addCinemas(List<CinemaDto> cinemas) {
-    return cinemaDao.saveAll(cinemas
-        .stream()
-        .map(CinemaMapper::mapCinema)
-        .toList());
+    addCinemaHallsToCinema(cinemaFromDb.getId(), cinema.getCinemaHallDtos());
+
+    return cinemaFromDb;
   }
 
   /**
@@ -110,10 +104,20 @@ public class CinemaService {
    * @param cinema обновленные данные кинотеатра.
    * @return обновленный кинотеатр.
    */
-  public Optional<Cinema> editCinema(UUID id, CinemaDto cinema) throws Exception {
+  public Optional<Cinema> editCinema(UUID id, UpdateCinemaDto cinema) throws Exception {
     if (cinemaDao.findByName(cinema.getCinemaName()).isPresent()) {
       throw new Exception("Movie with title = {" + cinema.getCinemaName() + "} already exist!");
     }
+
+    Optional<Cinema> cinemaFromDb = cinemaDao.findById(id);
+
+    CreateAddressDto createAddressDto = cinema.getAddressDto();
+    addressDao.update(cinemaFromDb.get().getAddressId(), AddressMapper.mapAddress(createAddressDto))
+        .orElseGet(() -> addressDao
+            .save(AddressMapper.mapAddress(createAddressDto)));
+
+    updateCinemaHallsToCinema(cinema.getCinemaHallDtos());
+
     return cinemaDao.update(id, CinemaMapper.mapCinema(cinema));
   }
 
@@ -144,5 +148,46 @@ public class CinemaService {
     cinemaHallDao.deleteAllById(cinemaHallsIds);
 
     return cinemaDao.deleteById(cinemaId);
+  }
+
+  public List<CinemaInfoDto> getCinemasByCity() {
+    return null;
+  }
+
+  public void addCinemaHallsToCinema(UUID cinemaId, List<CreateCinemaHallDto> cinemaHallsDto) throws Exception {
+    if (cinemaHallsDto.isEmpty())
+      throw new Exception();
+
+    List<CinemaHall> cinemaHalls = cinemaHallDao.saveAll(cinemaHallsDto
+        .stream()
+        .map(ch -> {
+          CinemaHall cinemaHall = CinemaMapper.mapCinemaHall(ch);
+          cinemaHall.setCinemaId(cinemaId);
+          return cinemaHall;
+        }).toList());
+
+    cinemaHalls.forEach(this::addSeatsToCinemaHall);
+  }
+
+  public void updateCinemaHallsToCinema(List<UpdateCinemaHallDto> cinemaHallsDto) throws Exception {
+    if (cinemaHallsDto.isEmpty())
+      throw new Exception();
+    List<CinemaHall> cinemaHalls = cinemaHallDao.saveAll(cinemaHallsDto
+        .stream()
+        .map(CinemaMapper::mapCinemaHall).toList());
+
+    cinemaHalls.forEach(this::addSeatsToCinemaHall);
+  }
+
+  private void addSeatsToCinemaHall(CinemaHall cinemaHall) {
+    for (int row = 1; row <= cinemaHall.getRowsNumber(); row++) {
+      for (int place = 1; place <= cinemaHall.getPlaceNumber(); place++) {
+        Seat seat = new Seat();
+        seat.setCinemaHallId(cinemaHall.getId());
+        seat.setRowNumber(row);
+        seat.setPlace(place);
+        seatDao.save(seat);
+      }
+    }
   }
 }

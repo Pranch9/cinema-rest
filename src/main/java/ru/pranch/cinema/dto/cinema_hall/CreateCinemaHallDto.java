@@ -1,17 +1,17 @@
-package ru.pranch.cinema.dto;
+package ru.pranch.cinema.dto.cinema_hall;
 
 public class CreateCinemaHallDto {
 
-  private String name;
+  private String hallName;
   private int rowsNumber;
   private int placeNumber;
 
-  public String getName() {
-    return name;
+  public String getHallName() {
+    return hallName;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setHallName(String hallName) {
+    this.hallName = hallName;
   }
 
   public int getRowsNumber() {

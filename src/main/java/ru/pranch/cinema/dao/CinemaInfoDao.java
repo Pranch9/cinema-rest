@@ -2,7 +2,7 @@ package ru.pranch.cinema.dao;
 
 import java.util.List;
 import java.util.Optional;
-import ru.pranch.cinema.dto.CinemaInfoDto;
+import ru.pranch.cinema.dto.cinema.CinemaInfoDto;
 
 public interface CinemaInfoDao {
   List<CinemaInfoDto> findByCity(String city);

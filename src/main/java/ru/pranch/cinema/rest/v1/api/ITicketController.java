@@ -26,8 +26,8 @@ public interface ITicketController {
       produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<Ticket> editTicket(@RequestBody TicketDto ticketDto, @PathVariable UUID id);
 
-  @DeleteMapping(value = "/control/{id}")
-  ResponseEntity<Ticket> deleteTicket(@RequestBody TicketDto ticketDto, @PathVariable UUID id);
+  @DeleteMapping(value = "/control")
+  ResponseEntity<Integer> deleteTickets(@RequestBody List<UUID> ids);
 
   @PostMapping(value = "/control")
   ResponseEntity<List<Ticket>> addTickets(@RequestBody List<TicketDto> ticketsDto);

@@ -18,10 +18,10 @@ import ru.pranch.cinema.model.Session;
 
 @RequestMapping(value = "/api/v1/sessions")
 public interface ISessionController {
-  @GetMapping(value = "/sessions", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<List<Session>> getSessions();
 
-  @GetMapping(value = "/session/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<Session> getSession(@PathVariable UUID id);
 
   @GetMapping(value = "/date/{date}", produces = MediaType.APPLICATION_JSON_VALUE)

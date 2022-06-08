@@ -1,8 +1,10 @@
-package ru.pranch.cinema.dto;
+package ru.pranch.cinema.dto.cinema;
 
 import java.util.List;
+import ru.pranch.cinema.dto.CreateAddressDto;
+import ru.pranch.cinema.dto.cinema_hall.CreateCinemaHallDto;
 
-public class CinemaDto {
+public class CreateCinemaDto {
   private String cinemaName;
   private CreateAddressDto createAddressDto;
   private List<CreateCinemaHallDto> cinemaHallDtos;
