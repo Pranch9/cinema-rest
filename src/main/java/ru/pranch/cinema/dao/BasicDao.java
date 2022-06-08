@@ -3,9 +3,7 @@ package ru.pranch.cinema.dao;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface BasicDao<T> {
   T save(T t);
 
