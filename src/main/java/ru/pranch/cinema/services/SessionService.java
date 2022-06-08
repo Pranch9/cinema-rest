@@ -66,7 +66,7 @@ public class SessionService {
     }
     LocalTime timeToCheck = LocalDateTime.ofInstant(session.getSessionDate().toInstant(), ZoneId.systemDefault()).toLocalTime();
 
-    List<Session> sessionsFromDb = sessionDao.findAllByCinemaRoomAndDate(session.getCinemaHallId(), session.getSessionDate());
+    List<Session> sessionsFromDb = sessionDao.findAllByCinemaHallAndDate(session.getCinemaHallId(), session.getSessionDate());
 
     return sessionsFromDb.stream().noneMatch(sessionFromDb -> {
       LocalTime sessionTime = LocalTime.ofInstant(sessionFromDb.getSessionDate().toInstant(), ZoneId.systemDefault());

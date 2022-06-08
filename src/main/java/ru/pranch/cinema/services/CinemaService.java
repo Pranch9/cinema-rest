@@ -135,7 +135,7 @@ public class CinemaService {
               .stream()
               .map(Seat::getId)
               .toList());
-          sessionDao.deleteAllById(sessionDao.findAllByCinemaRoomId(ch)
+          sessionDao.deleteAllById(sessionDao.findAllByCinemaHallId(ch)
               .stream()
               .map(Session::getId)
               .toList());

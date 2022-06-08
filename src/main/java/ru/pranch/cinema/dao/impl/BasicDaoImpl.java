@@ -14,7 +14,7 @@ import ru.pranch.cinema.dao.BasicDao;
 import ru.pranch.cinema.enums.TableName;
 
 public abstract class BasicDaoImpl<T> implements BasicDao<T> {
-  private final Jdbi jdbi;
+  protected final Jdbi jdbi;
 
   @SuppressWarnings(value = "unchecked")
   private final Class<T> entityType = (Class<T>) GenericTypeResolver.resolveTypeArgument(getClass(), BasicDaoImpl.class);

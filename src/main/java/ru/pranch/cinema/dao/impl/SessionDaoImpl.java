@@ -6,48 +6,45 @@ import java.util.UUID;
 import org.jdbi.v3.core.Jdbi;
 import org.springframework.stereotype.Repository;
 import ru.pranch.cinema.dao.SessionDao;
-import ru.pranch.cinema.enums.TableName;
 import ru.pranch.cinema.model.Session;
 
 @Repository
 public class SessionDaoImpl extends BasicDaoImpl<Session> implements SessionDao {
-  private final Jdbi jdbi;
 
   public SessionDaoImpl(Jdbi jdbi) {
     super(jdbi);
-    this.jdbi = jdbi;
   }
 
   @Override
   public List<Session> findAllByMovieId(UUID movieId) {
     return jdbi.withHandle(handle ->
-        handle.createQuery("select * " +
-                "from " + TableName.SESSION.getDbTableName() + " " +
-                "where movie_id = :movieId;")
+        handle.createQuery("""
+                select * from sessions where movie_id = :movieId;
+                """)
             .bind("movieId", movieId)
             .mapToBean(Session.class)
             .list());
   }
 
   @Override
-  public List<Session> findAllByCinemaRoomAndDate(UUID cinemaRoomId, Date sessionDate) {
+  public List<Session> findAllByCinemaHallAndDate(UUID cinemaHallId, Date sessionDate) {
     return jdbi.withHandle(handle ->
-        handle.createQuery("select * " +
-                "from " + TableName.SESSION.getDbTableName() + " " +
-                "where cinema_room_id = :cinemaRoomId and session_date = :sessionDate;")
-            .bind("cinemaRoomId", cinemaRoomId)
+        handle.createQuery("""
+                select * from sessions where cinema_hall_id = :cinemaHallId and date(session_date) = :sessionDate;
+                """)
+            .bind("cinemaHallId", cinemaHallId)
             .bind("sessionDate", sessionDate)
             .mapToBean(Session.class)
             .list());
   }
 
   @Override
-  public List<Session> findAllByCinemaRoomId(UUID cinemaRoomId) {
+  public List<Session> findAllByCinemaHallId(UUID cinemaHallId) {
     return jdbi.withHandle(handle ->
-        handle.createQuery("select * " +
-                "from " + TableName.SESSION.getDbTableName() + " " +
-                "where cinema_room_id = :cinemaRoomId;")
-            .bind("cinemaRoomId", cinemaRoomId)
+        handle.createQuery("""
+                select * from sessions where cinema_hall_id = :cinemaRoomId;
+                """)
+            .bind("cinemaHallId", cinemaHallId)
             .mapToBean(Session.class)
             .list());
   }

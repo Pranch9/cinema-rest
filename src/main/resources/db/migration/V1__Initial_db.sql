@@ -1,7 +1,10 @@
 create table if not exists addresses
 (
-    id          uuid not null primary key,
-    cinema_name varchar(255) unique
+    id           uuid not null primary key,
+    street       varchar(255),
+    house_number varchar(255),
+    city         varchar(255),
+    zip_code      integer
 );
 
 

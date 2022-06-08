@@ -5,7 +5,7 @@ public class CreateAddressDto {
   private String street;
   private String houseNumber;
   private String city;
-  private String zipCode;
+  private int zipCode;
 
   public String getStreet() {
     return street;
@@ -31,11 +31,11 @@ public class CreateAddressDto {
     this.city = city;
   }
 
-  public String getZipCode() {
+  public int getZipCode() {
     return zipCode;
   }
 
-  public void setZipCode(String zipCode) {
+  public void setZipCode(int zipCode) {
     this.zipCode = zipCode;
   }
 }
