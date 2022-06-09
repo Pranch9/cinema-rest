@@ -6,6 +6,7 @@ public class Seat {
   private UUID id;
   private int rowNumber;
   private int place;
+  private boolean booked = false;
   private UUID cinemaHallId;
 
   public Seat() {
@@ -44,13 +45,22 @@ public class Seat {
     this.cinemaHallId = cinemaHallId;
   }
 
+  public boolean isBooked() {
+    return booked;
+  }
+
+  public void setBooked(boolean booked) {
+    this.booked = booked;
+  }
+
   @Override
   public String toString() {
     return "Seat{" +
-      "id=" + id +
-      ", rowNumber=" + rowNumber +
-      ", place=" + place +
-      ", cinemaHallId=" + cinemaHallId +
-      '}';
+        "id=" + id +
+        ", rowNumber=" + rowNumber +
+        ", place=" + place +
+        ", booked=" + booked +
+        ", cinemaHallId=" + cinemaHallId +
+        '}';
   }
 }

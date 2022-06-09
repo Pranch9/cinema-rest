@@ -1,14 +1,13 @@
 package ru.pranch.cinema.mapper;
 
-import ru.pranch.cinema.dto.SessionDto;
+import ru.pranch.cinema.dto.CreateSessionDto;
 import ru.pranch.cinema.model.Session;
 
 public class SessionMapper {
-  public static Session mapSession(SessionDto sessionDto) {
+  public static Session mapSession(CreateSessionDto createSessionDto) {
     Session session = new Session();
-    session.setCinemaHallId(sessionDto.getCinemaHallId());
-    session.setSessionDate(sessionDto.getSessionDate());
-    session.setMovieId(sessionDto.getMovieId());
+    session.setCinemaHallId(createSessionDto.getCinemaHallId());
+    session.setSessionDate(createSessionDto.getSessionDate());
 
     return session;
   }

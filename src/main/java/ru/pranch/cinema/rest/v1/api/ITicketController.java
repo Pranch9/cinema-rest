@@ -1,6 +1,7 @@
 package ru.pranch.cinema.rest.v1.api;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.pranch.cinema.dto.TicketDto;
+import ru.pranch.cinema.dto.CreateTicketDto;
+import ru.pranch.cinema.enums.Status;
 import ru.pranch.cinema.model.Ticket;
 
 @RequestMapping(value = "/api/v1/tickets")
@@ -22,13 +24,20 @@ public interface ITicketController {
   @GetMapping(value = "/ticket/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<Ticket> getTicket(@PathVariable UUID id);
 
+  @GetMapping(value = "/bookings/{sessionId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  ResponseEntity<Map<UUID, Boolean>> getBookings(@PathVariable UUID sessionId);
+
   @PutMapping(value = "/control/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  ResponseEntity<Ticket> editTicket(@RequestBody TicketDto ticketDto, @PathVariable UUID id);
+  ResponseEntity<Ticket> editTicket(@RequestBody CreateTicketDto createTicketDto, @PathVariable UUID id);
+
+  @PutMapping(value = "/control/status/{id}/{status}", consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  ResponseEntity<List<Ticket>> updateTicketStatus(@RequestBody List<CreateTicketDto> ticketsDto, @PathVariable UUID id, @PathVariable Status status);
 
   @DeleteMapping(value = "/control")
   ResponseEntity<Integer> deleteTickets(@RequestBody List<UUID> ids);
 
   @PostMapping(value = "/control")
-  ResponseEntity<List<Ticket>> addTickets(@RequestBody List<TicketDto> ticketsDto);
+  ResponseEntity<List<Ticket>> addTickets(@RequestBody List<CreateTicketDto> ticketsDto);
 }

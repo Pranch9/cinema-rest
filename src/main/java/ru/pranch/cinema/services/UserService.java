@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
 import ru.pranch.cinema.dao.UserDao;
-import ru.pranch.cinema.dto.UserDto;
+import ru.pranch.cinema.dto.CreateUserDto;
 import ru.pranch.cinema.mapper.UserMapper;
 import ru.pranch.cinema.model.User;
 
@@ -25,18 +25,18 @@ public class UserService {
     return userDao.findById(id);
   }
 
-  public User addUser(UserDto user) {
+  public User addUser(CreateUserDto user) {
     return userDao.save(UserMapper.mapUser(user));
   }
 
-  public List<User> addUsers(List<UserDto> users) {
+  public List<User> addUsers(List<CreateUserDto> users) {
     return userDao.saveAll(users
       .stream()
       .map(UserMapper::mapUser)
       .toList());
   }
 
-  public Optional<User> editUser(UUID id, UserDto user) {
+  public Optional<User> editUser(UUID id, CreateUserDto user) {
     return userDao.update(id, UserMapper.mapUser(user));
   }
 }

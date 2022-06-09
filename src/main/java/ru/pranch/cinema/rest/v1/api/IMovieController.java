@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.pranch.cinema.dto.MovieDto;
+import ru.pranch.cinema.dto.CreateMovieDto;
 import ru.pranch.cinema.enums.MovieGenre;
 import ru.pranch.cinema.model.Movie;
 
@@ -31,11 +31,11 @@ public interface IMovieController {
 
   @PostMapping(value = "/control", consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  ResponseEntity<List<Movie>> addMovies(@RequestBody List<MovieDto> moviesDto);
+  ResponseEntity<List<Movie>> addMovies(@RequestBody List<CreateMovieDto> moviesDto);
 
   @PutMapping(value = "/control/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  ResponseEntity<Movie> editMovie(@RequestBody MovieDto movieDto, @PathVariable UUID id);
+  ResponseEntity<Movie> editMovie(@RequestBody CreateMovieDto createMovieDto, @PathVariable UUID id);
 
   @DeleteMapping(value = "/control")
   ResponseEntity<Integer> deleteMovies(@RequestBody List<UUID> ids);

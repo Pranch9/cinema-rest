@@ -1,12 +1,13 @@
 package ru.pranch.cinema.dto;
 
+import java.util.List;
 import java.util.UUID;
 import ru.pranch.cinema.enums.Status;
 
-public class TicketDto {
+public class CreateTicketDto {
   private UUID sessionId;
-  private UUID seatId;
-  private UUID userId;
+  private List<CreateSeatDto> seatsDto;
+  private CreateUserDto createUserDto;
   private Status status;
   private double price;
 
@@ -18,20 +19,20 @@ public class TicketDto {
     this.sessionId = sessionId;
   }
 
-  public UUID getSeatId() {
-    return seatId;
+  public List<CreateSeatDto> getSeatsDto() {
+    return seatsDto;
   }
 
-  public void setSeatId(UUID seatId) {
-    this.seatId = seatId;
+  public void setSeatsDto(List<CreateSeatDto> seatsDto) {
+    this.seatsDto = seatsDto;
   }
 
-  public UUID getUserId() {
-    return userId;
+  public CreateUserDto getUserDto() {
+    return createUserDto;
   }
 
-  public void setUserId(UUID userId) {
-    this.userId = userId;
+  public void setUserDto(CreateUserDto createUserDto) {
+    this.createUserDto = createUserDto;
   }
 
   public Status getStatus() {

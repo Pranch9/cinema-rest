@@ -4,7 +4,7 @@ create table if not exists addresses
     street       varchar(255),
     house_number varchar(255),
     city         varchar(255),
-    zip_code      integer
+    zip_code     integer
 );
 
 
@@ -48,6 +48,7 @@ create table if not exists seats
     row_number     integer not null,
     place          integer not null,
     cinema_hall_id uuid    not null,
+    booked         boolean not null,
     constraint seats_cinema_hall_id_fkey foreign key (cinema_hall_id) references cinema_halls (id)
 );
 

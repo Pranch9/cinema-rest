@@ -59,6 +59,20 @@ public class SessionInfoDaoImpl extends BasicDaoImpl<SessionInfoDto> implements 
   }
 
   @Override
+  public List<SessionInfoDto> findByValue(String value) {
+    String sql = selectAndJoinExpression + """
+        where c.name like :value or a.city like :value or a.street like :value or c.name like :value or cr.name like 
+        :value or m.title like :value
+        """;
+
+    return jdbi.withHandle(handle -> handle
+        .createQuery(sql)
+        .bind("value", value)
+        .mapToBean(SessionInfoDto.class)
+        .list());
+  }
+
+  @Override
   public List<SessionInfoDto> findAll() {
     return jdbi.withHandle(handle -> handle
         .createQuery(selectAndJoinExpression)

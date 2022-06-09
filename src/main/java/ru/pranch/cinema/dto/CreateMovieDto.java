@@ -2,9 +2,18 @@ package ru.pranch.cinema.dto;
 
 import ru.pranch.cinema.enums.MovieGenre;
 
-public class MovieDto {
+public class CreateMovieDto {
   private String title;
   private MovieGenre movieGenre;
+  private int length;
+
+  public int getLength() {
+    return length;
+  }
+
+  public void setLength(int length) {
+    this.length = length;
+  }
 
   public String getTitle() {
     return title;

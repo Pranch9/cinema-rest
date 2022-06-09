@@ -5,7 +5,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-import ru.pranch.cinema.dto.MovieDto;
+import ru.pranch.cinema.dto.CreateMovieDto;
 import ru.pranch.cinema.enums.MovieGenre;
 import ru.pranch.cinema.model.Movie;
 import ru.pranch.cinema.rest.v1.api.IMovieController;
@@ -33,15 +33,19 @@ public class MovieControllerImpl implements IMovieController {
   }
 
   @Override
-  public ResponseEntity<Movie> addMovie(MovieDto movieDto) throws Exception {
-    return ResponseEntity.ok(movieService.addMovie(movieDto));
+  public ResponseEntity<Movie> editMovie(CreateMovieDto createMovieDto, UUID id) {
+    try {
+      return movieService.editMovie(id, createMovieDto)
+          .map(ResponseEntity::ok)
+          .orElseGet(() -> ResponseEntity.notFound().build());
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @Override
-  public ResponseEntity<Movie> editMovie(MovieDto movieDto, UUID id) throws Exception {
-    return movieService.editMovie(id, movieDto)
-        .map(ResponseEntity::ok)
-        .orElseGet(() -> ResponseEntity.notFound().build());
+  public ResponseEntity<Integer> deleteMovies(List<UUID> ids) {
+    return ResponseEntity.ok(movieService.deleteMovies(ids));
   }
 
   @Override
@@ -57,7 +61,7 @@ public class MovieControllerImpl implements IMovieController {
   }
 
   @Override
-  public ResponseEntity<Integer> deleteMovie(UUID id) {
-    return ResponseEntity.ok(movieService.deleteMovie(id));
+  public ResponseEntity<List<Movie>> addMovies(List<CreateMovieDto> moviesDto) {
+    return ResponseEntity.ok(movieService.addMovies(moviesDto));
   }
 }

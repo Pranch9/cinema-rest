@@ -2,7 +2,7 @@ package ru.pranch.cinema.dto;
 
 import java.util.Date;
 
-public class UserDto {
+public class CreateUserDto {
   private String username;
   private String mail;
   private char[] password;

@@ -6,7 +6,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.pranch.cinema.dao.MovieDao;
-import ru.pranch.cinema.dto.MovieDto;
+import ru.pranch.cinema.dto.CreateMovieDto;
 import ru.pranch.cinema.enums.MovieGenre;
 import ru.pranch.cinema.mapper.MovieMapper;
 import ru.pranch.cinema.model.Movie;
@@ -36,28 +36,21 @@ public class MovieService {
     return movieDao.findMoviesByGenre(movieGenre);
   }
 
-  public Movie addMovie(MovieDto movie) throws Exception {
-    if (movieDao.findByTitle(movie.getTitle()).isPresent()) {
-      throw new Exception("Movie with title = {" + movie.getTitle() + "} already exist!");
-    }
-    return movieDao.save(MovieMapper.mapMovie(movie));
-  }
-
-  public List<Movie> addMovies(List<MovieDto> movies) {
+  public List<Movie> addMovies(List<CreateMovieDto> movies) {
     return movieDao.saveAll(movies
         .stream()
         .map(MovieMapper::mapMovie)
         .toList());
   }
 
-  public Optional<Movie> editMovie(UUID id, MovieDto movie) throws Exception {
+  public Optional<Movie> editMovie(UUID id, CreateMovieDto movie) throws Exception {
     if (movieDao.findByTitle(movie.getTitle()).isPresent()) {
       throw new Exception("Movie with title = {" + movie.getTitle() + "} already exist!");
     }
     return movieDao.update(id, MovieMapper.mapMovie(movie));
   }
 
-  public int deleteMovie(UUID id) {
-    return movieDao.deleteById(id);
+  public int deleteMovies(List<UUID> ids) {
+    return movieDao.deleteAllById(ids);
   }
 }

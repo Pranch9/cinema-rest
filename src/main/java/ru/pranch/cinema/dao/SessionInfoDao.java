@@ -11,6 +11,7 @@ public interface SessionInfoDao {
   List<SessionInfoDto> findByMovie(UUID movieId);
 
   List<SessionInfoDto> findByDate(Date date);
+  List<SessionInfoDto> findByValue(String value);
 
   List<SessionInfoDto> findAll();
 }

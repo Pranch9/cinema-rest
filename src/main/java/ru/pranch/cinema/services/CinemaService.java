@@ -186,6 +186,7 @@ public class CinemaService {
         seat.setCinemaHallId(cinemaHall.getId());
         seat.setRowNumber(row);
         seat.setPlace(place);
+        seat.setBooked(false);
         seatDao.save(seat);
       }
     }

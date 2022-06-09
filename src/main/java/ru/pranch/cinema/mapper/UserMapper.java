@@ -1,15 +1,15 @@
 package ru.pranch.cinema.mapper;
 
-import ru.pranch.cinema.dto.UserDto;
+import ru.pranch.cinema.dto.CreateUserDto;
 import ru.pranch.cinema.model.User;
 
 public class UserMapper {
-  public static User mapUser(UserDto userDto) {
+  public static User mapUser(CreateUserDto createUserDto) {
     User user = new User();
-    user.setCreationDate(userDto.getCreationDate());
-    user.setMail(userDto.getMail());
-    user.setPassword(userDto.getPassword());
-    user.setUsername(userDto.getUsername());
+    user.setCreationDate(createUserDto.getCreationDate());
+    user.setMail(createUserDto.getMail());
+    user.setPassword(createUserDto.getPassword());
+    user.setUsername(createUserDto.getUsername());
 
     return user;
   }

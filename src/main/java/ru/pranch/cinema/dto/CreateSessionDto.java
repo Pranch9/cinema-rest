@@ -3,17 +3,17 @@ package ru.pranch.cinema.dto;
 import java.util.Date;
 import java.util.UUID;
 
-public class SessionDto {
-  private UUID movieId;
+public class CreateSessionDto {
+  private CreateMovieDto createMovieDto;
   private UUID cinemaHallId;
   private Date sessionDate;
 
-  public UUID getMovieId() {
-    return movieId;
+  public CreateMovieDto getMovieDto() {
+    return createMovieDto;
   }
 
-  public void setMovieId(UUID movieId) {
-    this.movieId = movieId;
+  public void setMovieDto(CreateMovieDto createMovieDto) {
+    this.createMovieDto = createMovieDto;
   }
 
   public UUID getCinemaHallId() {
