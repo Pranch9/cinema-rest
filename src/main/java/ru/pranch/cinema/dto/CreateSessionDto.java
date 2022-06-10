@@ -8,11 +8,11 @@ public class CreateSessionDto {
   private UUID cinemaHallId;
   private Date sessionDate;
 
-  public CreateMovieDto getMovieDto() {
+  public CreateMovieDto getCreateMovieDto() {
     return createMovieDto;
   }
 
-  public void setMovieDto(CreateMovieDto createMovieDto) {
+  public void setCreateMovieDto(CreateMovieDto createMovieDto) {
     this.createMovieDto = createMovieDto;
   }
 

@@ -1,33 +1,38 @@
 package ru.pranch.cinema.services;
 
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.pranch.cinema.dao.SeatDao;
 import ru.pranch.cinema.dao.SessionDao;
 import ru.pranch.cinema.dao.TicketDao;
+import ru.pranch.cinema.dao.UserDao;
+import ru.pranch.cinema.dto.Booking;
 import ru.pranch.cinema.dto.CreateTicketDto;
 import ru.pranch.cinema.enums.Status;
 import ru.pranch.cinema.mapper.TicketMapper;
+import ru.pranch.cinema.mapper.UserMapper;
 import ru.pranch.cinema.model.Seat;
 import ru.pranch.cinema.model.Session;
 import ru.pranch.cinema.model.Ticket;
+import ru.pranch.cinema.model.User;
 
 @Service
 public class TicketService {
   private final TicketDao ticketDao;
   private final SessionDao sessionDao;
   private final SeatDao seatDao;
+  private final UserDao userDao;
 
   @Autowired
-  public TicketService(TicketDao ticketDao, SessionDao sessionDao, SeatDao seatDao) {
+  public TicketService(TicketDao ticketDao, SessionDao sessionDao, SeatDao seatDao, UserDao userDao) {
     this.ticketDao = ticketDao;
     this.sessionDao = sessionDao;
     this.seatDao = seatDao;
+    this.userDao = userDao;
   }
 
   public List<Ticket> getTickets() {
@@ -38,36 +43,71 @@ public class TicketService {
     return ticketDao.findById(id);
   }
 
-  public Ticket addTicket(CreateTicketDto ticket) {
-    return ticketDao.save(TicketMapper.mapTicket(ticket));
-  }
+  public List<Ticket> addTickets(CreateTicketDto createTicketDto) throws Exception {
+    User user = UserMapper.mapUser(createTicketDto.getUserDto());
 
-  public List<Ticket> addTickets(List<CreateTicketDto> tickets) {
-    return ticketDao.saveAll(tickets
+    User userFromDb = userDao.findByUsername(user.getUsername())
+        .orElseGet(() -> {
+          user.setCreationDate(new Date());
+          return userDao.save(user);
+        });
+
+    List<Seat> bookingSeats = createTicketDto.getSeats();
+    if (!checkSeatAvailability(bookingSeats, createTicketDto.getSessionId())) {
+      throw new Exception();
+    }
+
+    List<Ticket> tickets = bookingSeats
         .stream()
-        .map(TicketMapper::mapTicket)
-        .toList());
+        .map(seat -> {
+          Ticket ticket = TicketMapper.mapTicket(createTicketDto);
+          ticket.setUserId(userFromDb.getId());
+          ticket.setSeatId(seat.getId());
+          return ticketDao.save(ticket);
+        }).toList();
+
+    return ticketDao.saveAll(tickets);
   }
 
-  public Optional<Ticket> editTicket(UUID id, CreateTicketDto ticket) {
-    return ticketDao.update(id, TicketMapper.mapTicket(ticket));
-  }
-
-  public Map<UUID, Boolean> getBookings(UUID sessionId) throws Exception {
+  public List<Booking> getBookings(UUID sessionId) throws Exception {
     Session session = sessionDao.findById(sessionId)
-        .orElseThrow(() -> new Exception());
+        .orElseThrow(Exception::new);
 
     return seatDao.findSeatsByCinemaHall(session.getCinemaHallId())
         .stream()
-        .collect(Collectors.toMap(Seat::getId, seat -> ticketDao.findBySessionAndSeat(session.getId(), seat.getId()).isPresent()));
+        .map(seat -> {
+          Booking booking = new Booking();
+          booking.setSeatId(seat.getId());
+          booking.setBooked(ticketDao.findBySessionAndSeat(session.getId(), seat.getId()).isPresent());
+          return booking;
+        }).toList();
 
   }
 
-  public List<Ticket> updateTicketsStatus(List<CreateTicketDto> ticketsDto, UUID id, Status status) {
-    return null;
+  public Optional<Ticket> updateTicketsStatus(UUID id, Status status) throws Exception {
+    Ticket ticketFromDb = ticketDao.findById(id)
+        .orElseThrow(Exception::new);
+    ticketFromDb.setStatus(status);
+
+    return ticketDao.update(id, ticketFromDb);
   }
 
   public int deleteTickets(List<UUID> ids) {
-    return 0;
+    return ticketDao.deleteAllById(ids);
+  }
+
+  private boolean checkSeatAvailability(List<Seat> seatsToBook, UUID sessionId) {
+    return seatsToBook
+        .stream()
+        .noneMatch(seatToBook -> {
+          try {
+            return getBookings(sessionId)
+                .stream()
+                .filter(booking -> seatToBook.getId().equals(booking.getSeatId()))
+                .anyMatch(Booking::isBooked);
+          } catch (Exception e) {
+            return true;
+          }
+        });
   }
 }

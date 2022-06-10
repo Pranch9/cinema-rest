@@ -7,7 +7,7 @@ import ru.pranch.cinema.dto.cinema_hall.CreateCinemaHallDto;
 public class CreateCinemaDto {
   private String cinemaName;
   private CreateAddressDto createAddressDto;
-  private List<CreateCinemaHallDto> cinemaHallDtos;
+  private List<CreateCinemaHallDto> createCinemaHallDtos;
 
   public CreateAddressDto getCreateAddressDto() {
     return createAddressDto;
@@ -17,12 +17,12 @@ public class CreateCinemaDto {
     this.createAddressDto = createAddressDto;
   }
 
-  public List<CreateCinemaHallDto> getCinemaHallDtos() {
-    return cinemaHallDtos;
+  public List<CreateCinemaHallDto> getCreateCinemaHallDtos() {
+    return createCinemaHallDtos;
   }
 
-  public void setCinemaHallDtos(List<CreateCinemaHallDto> cinemaHallDtos) {
-    this.cinemaHallDtos = cinemaHallDtos;
+  public void setCreateCinemaHallDtos(List<CreateCinemaHallDto> createCinemaHallDtos) {
+    this.createCinemaHallDtos = createCinemaHallDtos;
   }
 
   public String getCinemaName() {

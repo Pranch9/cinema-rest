@@ -1,11 +1,11 @@
 package ru.pranch.cinema.rest.v1.impl;
 
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import ru.pranch.cinema.dto.Booking;
 import ru.pranch.cinema.dto.CreateTicketDto;
 import ru.pranch.cinema.enums.Status;
 import ru.pranch.cinema.model.Ticket;
@@ -34,7 +34,7 @@ public class TicketControllerImpl implements ITicketController {
   }
 
   @Override
-  public ResponseEntity<Map<UUID, Boolean>> getBookings(UUID id) {
+  public ResponseEntity<List<Booking>> getBookings(UUID id) {
     try {
       return ResponseEntity.ok(ticketService.getBookings(id));
     } catch (Exception e) {
@@ -43,26 +43,27 @@ public class TicketControllerImpl implements ITicketController {
   }
 
   @Override
-  public ResponseEntity<Ticket> editTicket(CreateTicketDto createTicketDto, UUID id) {
-    return ticketService.editTicket(id, createTicketDto)
-        .map(ResponseEntity::ok)
-        .orElseGet(() -> ResponseEntity.notFound().build());
-  }
-
-  @Override
-  public ResponseEntity<List<Ticket>> updateTicketStatus(List<CreateTicketDto> ticketsDto, UUID id, Status status) {
-    ticketService.updateTicketsStatus(ticketsDto, id, status);
-    return null;
+  public ResponseEntity<Ticket> updateTicketStatus(UUID id, Status status) {
+    try {
+      return ticketService.updateTicketsStatus(id, status)
+          .map(ResponseEntity::ok)
+          .orElseGet(() -> ResponseEntity.notFound().build());
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @Override
   public ResponseEntity<Integer> deleteTickets(List<UUID> ids) {
-    ticketService.deleteTickets(ids);
-    return null;
+    return ResponseEntity.ok(ticketService.deleteTickets(ids));
   }
 
   @Override
-  public ResponseEntity<List<Ticket>> addTickets(List<CreateTicketDto> ticketsDto) {
-    return ResponseEntity.ok(ticketService.addTickets(ticketsDto));
+  public ResponseEntity<List<Ticket>> addTickets(CreateTicketDto createTicketDto) {
+    try {
+      return ResponseEntity.ok(ticketService.addTickets(createTicketDto));
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
   }
 }

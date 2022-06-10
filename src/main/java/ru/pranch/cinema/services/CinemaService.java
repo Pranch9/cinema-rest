@@ -92,7 +92,7 @@ public class CinemaService {
 
     Cinema cinemaFromDb = cinemaDao.save(mapCinema);
 
-    addCinemaHallsToCinema(cinemaFromDb.getId(), cinema.getCinemaHallDtos());
+    addCinemaHallsToCinema(cinemaFromDb.getId(), cinema.getCreateCinemaHallDtos());
 
     return cinemaFromDb;
   }
@@ -111,12 +111,12 @@ public class CinemaService {
 
     Optional<Cinema> cinemaFromDb = cinemaDao.findById(id);
 
-    CreateAddressDto createAddressDto = cinema.getAddressDto();
+    CreateAddressDto createAddressDto = cinema.getCreateAddressDto();
     addressDao.update(cinemaFromDb.get().getAddressId(), AddressMapper.mapAddress(createAddressDto))
         .orElseGet(() -> addressDao
             .save(AddressMapper.mapAddress(createAddressDto)));
 
-    updateCinemaHallsToCinema(cinema.getCinemaHallDtos());
+    updateCinemaHallsToCinema(cinema.getUpdateCinemaHallDtos());
 
     return cinemaDao.update(id, CinemaMapper.mapCinema(cinema));
   }

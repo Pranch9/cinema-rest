@@ -43,7 +43,7 @@ public class SessionService {
       throw new Exception();
     }
 
-    Movie movie = MovieMapper.mapMovie(createSessionDto.getMovieDto());
+    Movie movie = MovieMapper.mapMovie(createSessionDto.getCreateMovieDto());
     Movie movieFromDb = movieDao.findByTitle(movie.getTitle())
         .orElseGet(() -> movieDao
             .save(movie));
@@ -59,7 +59,7 @@ public class SessionService {
       throw new Exception();
     }
 
-    CreateMovieDto createMovieDto = createSessionDto.getMovieDto();
+    CreateMovieDto createMovieDto = createSessionDto.getCreateMovieDto();
     Movie movieFromDb = movieDao.findByTitle(createMovieDto.getTitle())
         .orElseGet(() -> movieDao
             .save(MovieMapper.mapMovie(createMovieDto)));
@@ -108,7 +108,7 @@ public class SessionService {
 
           return (sessionTime.equals(timeToCheck) ||
               (sessionTime.isBefore(timeToCheck) && endOfSession.isAfter(timeToCheck)) ||
-              (sessionTime.isAfter(timeToCheck) && timeToCheck.plusMinutes(session.getMovieDto().getLength()).isAfter(sessionTime)));
+              (sessionTime.isAfter(timeToCheck) && timeToCheck.plusMinutes(session.getCreateMovieDto().getLength()).isAfter(sessionTime)));
         });
   }
 }
