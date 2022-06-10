@@ -30,7 +30,8 @@ create table if not exists movies
 (
     id          uuid not null primary key,
     title       varchar(255) unique,
-    movie_genre varchar(255)
+    movie_genre varchar(255),
+    length      integer
 );
 
 create table if not exists users

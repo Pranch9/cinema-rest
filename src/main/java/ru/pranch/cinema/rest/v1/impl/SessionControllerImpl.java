@@ -22,13 +22,6 @@ public class SessionControllerImpl implements ISessionController {
   }
 
   @Override
-  public ResponseEntity<Session> getSession(UUID id) {
-    return sessionService.getSessionById(id)
-        .map(ResponseEntity::ok)
-        .orElseGet(() -> ResponseEntity.notFound().build());
-  }
-
-  @Override
   public ResponseEntity<List<SessionInfoDto>> getSessionInfoByDate(Date date) {
     return ResponseEntity.ok(sessionService.getSessionInfoByDate(date));
   }

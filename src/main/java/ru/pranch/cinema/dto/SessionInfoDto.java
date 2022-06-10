@@ -4,11 +4,11 @@ import java.util.Date;
 import java.util.UUID;
 
 public class SessionInfoDto {
-  UUID id;
-  String cinemaName;
-  String cinemaRoomName;
-  String movieTitle;
-  Integer length;
+  private UUID id;
+  private String cinemaName;
+  private String cinemaRoomName;
+  private String movieTitle;
+  private Integer length;
   private Date sessionDate;
 
   public UUID getId() {

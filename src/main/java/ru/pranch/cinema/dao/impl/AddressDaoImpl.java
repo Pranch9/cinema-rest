@@ -18,7 +18,7 @@ public class AddressDaoImpl extends BasicDaoImpl<Address> implements AddressDao 
   public Optional<Address> findAddress(String street, String houseNumber, String city, int zipCode) {
     return jdbi.withHandle(handle -> handle
         .createQuery("""
-            select * from addresses where street = :street AND house_number = :houseNumber AND city = :city AND zip_code = :zipCode;
+            select * from addresses where street = :street and house_number = :houseNumber and city = :city and zip_code = :zipCode;
             """)
         .bind("city", city.toLowerCase(Locale.ROOT))
         .bind("street", street.toLowerCase(Locale.ROOT))

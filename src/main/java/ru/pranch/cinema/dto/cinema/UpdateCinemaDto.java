@@ -9,6 +9,14 @@ public class UpdateCinemaDto {
   private CreateAddressDto createAddressDto;
   private List<UpdateCinemaHallDto> updateCinemaHallDtos;
 
+  public String getCinemaName() {
+    return cinemaName;
+  }
+
+  public void setCinemaName(String cinemaName) {
+    this.cinemaName = cinemaName;
+  }
+
   public CreateAddressDto getCreateAddressDto() {
     return createAddressDto;
   }
@@ -23,13 +31,5 @@ public class UpdateCinemaDto {
 
   public void setUpdateCinemaHallDtos(List<UpdateCinemaHallDto> updateCinemaHallDtos) {
     this.updateCinemaHallDtos = updateCinemaHallDtos;
-  }
-
-  public String getCinemaName() {
-    return cinemaName;
-  }
-
-  public void setCinemaName(String cinemaName) {
-    this.cinemaName = cinemaName;
   }
 }

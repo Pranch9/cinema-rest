@@ -1,11 +1,21 @@
 package ru.pranch.cinema.dto;
 
 import java.util.Date;
+import java.util.UUID;
 
-public class CreateUserDto {
+public class GetUserDto {
+  private UUID id;
   private String username;
   private String mail;
-  private String password;
+  private Date creationDate;
+
+  public UUID getId() {
+    return id;
+  }
+
+  public void setId(UUID id) {
+    this.id = id;
+  }
 
   public String getUsername() {
     return username;
@@ -23,11 +33,11 @@ public class CreateUserDto {
     this.mail = mail;
   }
 
-  public String getPassword() {
-    return password;
+  public Date getCreationDate() {
+    return creationDate;
   }
 
-  public void setPassword(String password) {
-    this.password = password;
+  public void setCreationDate(Date creationDate) {
+    this.creationDate = creationDate;
   }
 }

@@ -1,6 +1,5 @@
 package ru.pranch.cinema.model;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.UUID;
 
@@ -8,7 +7,7 @@ public class User {
   private UUID id;
   private String username;
   private String mail;
-  private char[] password;
+  private String password;
   private Date creationDate;
 
   public User() {
@@ -39,11 +38,11 @@ public class User {
     this.mail = mail;
   }
 
-  public char[] getPassword() {
+  public String getPassword() {
     return password;
   }
 
-  public void setPassword(char[] password) {
+  public void setPassword(String password) {
     this.password = password;
   }
 
@@ -58,11 +57,11 @@ public class User {
   @Override
   public String toString() {
     return "User{" +
-      "id=" + id +
-      ", username='" + username + '\'' +
-      ", mail='" + mail + '\'' +
-      ", password=" + Arrays.toString(password) +
-      ", creationDate=" + creationDate +
-      '}';
+        "id=" + id +
+        ", username='" + username + '\'' +
+        ", mail='" + mail + '\'' +
+        ", password='" + password + '\'' +
+        ", creationDate=" + creationDate +
+        '}';
   }
 }

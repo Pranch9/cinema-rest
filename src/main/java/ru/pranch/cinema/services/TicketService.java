@@ -44,7 +44,7 @@ public class TicketService {
   }
 
   public List<Ticket> addTickets(CreateTicketDto createTicketDto) throws Exception {
-    User user = UserMapper.mapUser(createTicketDto.getUserDto());
+    User user = UserMapper.mapUser(createTicketDto.getCreateUserDto());
 
     User userFromDb = userDao.findByUsername(user.getUsername())
         .orElseGet(() -> {

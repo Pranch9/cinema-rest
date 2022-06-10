@@ -36,14 +36,6 @@ public class CreateTicketDto {
     this.createUserDto = createUserDto;
   }
 
-  public CreateUserDto getUserDto() {
-    return createUserDto;
-  }
-
-  public void setUserDto(CreateUserDto createUserDto) {
-    this.createUserDto = createUserDto;
-  }
-
   public Status getStatus() {
     return status;
   }

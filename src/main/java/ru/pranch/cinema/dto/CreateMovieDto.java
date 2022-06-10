@@ -7,14 +7,6 @@ public class CreateMovieDto {
   private MovieGenre movieGenre;
   private int length;
 
-  public int getLength() {
-    return length;
-  }
-
-  public void setLength(int length) {
-    this.length = length;
-  }
-
   public String getTitle() {
     return title;
   }
@@ -29,5 +21,13 @@ public class CreateMovieDto {
 
   public void setMovieGenre(MovieGenre movieGenre) {
     this.movieGenre = movieGenre;
+  }
+
+  public int getLength() {
+    return length;
+  }
+
+  public void setLength(int length) {
+    this.length = length;
   }
 }

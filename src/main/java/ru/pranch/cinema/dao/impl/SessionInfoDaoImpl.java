@@ -16,7 +16,7 @@ public class SessionInfoDaoImpl extends BasicDaoImpl<SessionInfoDto> implements 
   }
 
   private final String selectAndJoinExpression = """
-          select s.id as id, c.name as cinemaName, a.street as street, a.house_number as houseNumber, a.city as city, cr.name as cinemaRoomName, m.title as movieTitle, m.length as length, s.session_date as sessionDate
+          select s.id as id, c.cinema_name as cinemaName, a.street as street, a.house_number as houseNumber, a.city as city, cr.hall_name as cinemaRoomName, m.title as movieTitle, m.length as length, s.session_date as sessionDate
           from addresses a 
           join cinemas c on a.id = c.address_id 
           join cinema_halls cr on c.id = cr.cinema_id
@@ -61,7 +61,7 @@ public class SessionInfoDaoImpl extends BasicDaoImpl<SessionInfoDto> implements 
   @Override
   public List<SessionInfoDto> findByValue(String value) {
     String sql = selectAndJoinExpression + """
-        where c.name like :value or a.city like :value or a.street like :value or c.name like :value or cr.name like 
+        where c.cinema_name like :value or a.city like :value or a.street like :value or c.cinema_name like :value or cr.hall_name like 
         :value or m.title like :value
         """;
 

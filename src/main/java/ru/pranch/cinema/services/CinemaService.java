@@ -12,10 +12,12 @@ import ru.pranch.cinema.dao.CinemaInfoDao;
 import ru.pranch.cinema.dao.SeatDao;
 import ru.pranch.cinema.dao.SessionDao;
 import ru.pranch.cinema.dto.CreateAddressDto;
+import ru.pranch.cinema.dto.GetSeatDto;
 import ru.pranch.cinema.dto.cinema.CinemaInfoDto;
 import ru.pranch.cinema.dto.cinema.CreateCinemaDto;
 import ru.pranch.cinema.dto.cinema.UpdateCinemaDto;
 import ru.pranch.cinema.dto.cinema_hall.CreateCinemaHallDto;
+import ru.pranch.cinema.dto.cinema_hall.GetCinemaHallDto;
 import ru.pranch.cinema.dto.cinema_hall.UpdateCinemaHallDto;
 import ru.pranch.cinema.mapper.AddressMapper;
 import ru.pranch.cinema.mapper.CinemaMapper;
@@ -59,8 +61,8 @@ public class CinemaService {
    *
    * @return кинотеатр.
    */
-  public Optional<Cinema> getCinemaById(UUID id) {
-    return cinemaDao.findById(id);
+  public List<GetCinemaHallDto> getCinemaHallsByCinemaId(UUID cinemaId) {
+    return cinemaHallDao.findAllHallsFromCinema(cinemaId);
   }
 
   /**
@@ -100,25 +102,27 @@ public class CinemaService {
   /**
    * Метод обновляет данные по кинотеатру
    *
-   * @param id     кинотеатр который будет обновлен.
-   * @param cinema обновленные данные кинотеатра.
+   * @param id              кинотеатр который будет обновлен.
+   * @param updateCinemaDto обновленные данные кинотеатра.
    * @return обновленный кинотеатр.
    */
-  public Optional<Cinema> editCinema(UUID id, UpdateCinemaDto cinema) throws Exception {
-    if (cinemaDao.findByName(cinema.getCinemaName()).isPresent()) {
-      throw new Exception("Movie with title = {" + cinema.getCinemaName() + "} already exist!");
+  public Optional<Cinema> editCinema(UUID id, UpdateCinemaDto updateCinemaDto) throws Exception {
+    if (cinemaDao.findByName(updateCinemaDto.getCinemaName()).isPresent()) {
+      throw new Exception("Movie with title = {" + updateCinemaDto.getCinemaName() + "} already exist!");
     }
 
     Optional<Cinema> cinemaFromDb = cinemaDao.findById(id);
 
-    CreateAddressDto createAddressDto = cinema.getCreateAddressDto();
-    addressDao.update(cinemaFromDb.get().getAddressId(), AddressMapper.mapAddress(createAddressDto))
+    CreateAddressDto createAddressDto = updateCinemaDto.getCreateAddressDto();
+    Address addressFromDb = addressDao.update(cinemaFromDb.get().getAddressId(), AddressMapper.mapAddress(createAddressDto))
         .orElseGet(() -> addressDao
             .save(AddressMapper.mapAddress(createAddressDto)));
 
-    updateCinemaHallsToCinema(cinema.getUpdateCinemaHallDtos());
+    updateCinemaHallsToCinema(id, updateCinemaDto.getUpdateCinemaHallDtos());
+    Cinema cinema = CinemaMapper.mapCinema(updateCinemaDto);
+    cinema.setAddressId(addressFromDb.getId());
 
-    return cinemaDao.update(id, CinemaMapper.mapCinema(cinema));
+    return cinemaDao.update(id, cinema);
   }
 
   /**
@@ -131,13 +135,13 @@ public class CinemaService {
   public int deleteCinema(UUID cinemaId) {
     List<UUID> cinemaHallsIds = cinemaHallDao.findAllHallsFromCinema(cinemaId)
         .stream()
-        .map(CinemaHall::getId)
+        .map(GetCinemaHallDto::getId)
         .toList();
     cinemaHallsIds
         .forEach(ch -> {
           seatDao.deleteAllById(seatDao.findSeatsByCinemaHall(ch)
               .stream()
-              .map(Seat::getId)
+              .map(GetSeatDto::getId)
               .toList());
           sessionDao.deleteAllById(sessionDao.findAllByCinemaHallId(ch)
               .stream()
@@ -150,8 +154,8 @@ public class CinemaService {
     return cinemaDao.deleteById(cinemaId);
   }
 
-  public List<CinemaInfoDto> getCinemasByCity() {
-    return null;
+  public List<CinemaInfoDto> getCinemasByCity(String city) {
+    return cinemaInfoDao.findByCity(city);
   }
 
   public void addCinemaHallsToCinema(UUID cinemaId, List<CreateCinemaHallDto> cinemaHallsDto) throws Exception {
@@ -169,17 +173,47 @@ public class CinemaService {
     cinemaHalls.forEach(this::addSeatsToCinemaHall);
   }
 
-  public void updateCinemaHallsToCinema(List<UpdateCinemaHallDto> cinemaHallsDto) throws Exception {
+  public void updateCinemaHallsToCinema(UUID cinemaId, List<UpdateCinemaHallDto> cinemaHallsDto) throws Exception {
     if (cinemaHallsDto.isEmpty())
       throw new Exception();
-    List<CinemaHall> cinemaHalls = cinemaHallDao.saveAll(cinemaHallsDto
-        .stream()
-        .map(CinemaMapper::mapCinemaHall).toList());
+    cinemaHallsDto.forEach(ch -> {
+      CinemaHall cinemaHallFromDb = cinemaHallDao.findById(ch.getId())
+          .orElseGet(() -> {
+            CinemaHall cinemaHall = CinemaMapper.mapCinemaHall(ch);
+            cinemaHall.setCinemaId(cinemaId);
+            return cinemaHallDao.save(cinemaHall);
+          });
+      cinemaHallFromDb.setHallName(ch.getHallName());
+      cinemaHallFromDb.setPlaceNumber(ch.getPlaceNumber());
+      cinemaHallFromDb.setRowsNumber(ch.getRowsNumber());
 
-    cinemaHalls.forEach(this::addSeatsToCinemaHall);
+      cinemaHallDao.update(cinemaHallFromDb.getId(), cinemaHallFromDb)
+          .ifPresent(chu -> {
+            if (chu.getRowsNumber() != ch.getRowsNumber() || chu.getPlaceNumber() == ch.getPlaceNumber()) {
+              addSeatsToCinemaHall(chu);
+            }
+          });
+    });
+  }
+
+
+  public Optional<CinemaInfoDto> getCinema(UUID id) {
+    return cinemaInfoDao.findById(id);
+  }
+
+  public List<GetSeatDto> getSeatsByCinemaHallId(UUID cinemaHallId) {
+    return seatDao.findSeatsByCinemaHall(cinemaHallId);
   }
 
   private void addSeatsToCinemaHall(CinemaHall cinemaHall) {
+    List<GetSeatDto> seatsByCinemaHall = seatDao.findSeatsByCinemaHall(cinemaHall.getId());
+    if (!seatsByCinemaHall.isEmpty()) {
+      seatDao.deleteAllById(seatDao.findSeatsByCinemaHall(cinemaHall.getId())
+          .stream()
+          .map(GetSeatDto::getId)
+          .toList());
+    }
+
     for (int row = 1; row <= cinemaHall.getRowsNumber(); row++) {
       for (int place = 1; place <= cinemaHall.getPlaceNumber(); place++) {
         Seat seat = new Seat();

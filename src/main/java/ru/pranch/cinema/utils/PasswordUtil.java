@@ -3,8 +3,8 @@ package ru.pranch.cinema.utils;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
 public class PasswordUtil {
-  public static char[] encode(char[] password) {
-    return BCrypt.withDefaults().hashToChar(12, password);
+  public static String encode(String password) {
+    return BCrypt.withDefaults().hashToString(12, password.toCharArray());
   }
 
   public static boolean check(String password, String encodedPassword) {

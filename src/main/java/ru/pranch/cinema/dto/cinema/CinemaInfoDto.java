@@ -2,10 +2,10 @@ package ru.pranch.cinema.dto.cinema;
 
 public class CinemaInfoDto {
   private String cinemaName;
-  String city;
-  String street;
-  String houseNumber;
-  int zipCode;
+  private String city;
+  private String street;
+  private String houseNumber;
+  private int zipCode;
 
   public String getCinemaName() {
     return cinemaName;

@@ -5,10 +5,13 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import ru.pranch.cinema.dto.GetSeatDto;
 import ru.pranch.cinema.dto.cinema.CreateCinemaDto;
 import ru.pranch.cinema.dto.cinema.CinemaInfoDto;
 import ru.pranch.cinema.dto.cinema.UpdateCinemaDto;
+import ru.pranch.cinema.dto.cinema_hall.GetCinemaHallDto;
 import ru.pranch.cinema.model.Cinema;
+import ru.pranch.cinema.model.CinemaHall;
 import ru.pranch.cinema.rest.v1.api.ICinemaController;
 import ru.pranch.cinema.services.CinemaService;
 
@@ -27,10 +30,13 @@ public class CinemaControllerImpl implements ICinemaController {
   }
 
   @Override
-  public ResponseEntity<Cinema> getCinema(UUID id) {
-    return cinemaService.getCinemaById(id)
-        .map(ResponseEntity::ok)
-        .orElseGet(() -> ResponseEntity.notFound().build());
+  public ResponseEntity<List<GetCinemaHallDto>> getCinemaHallByCinemaId(UUID cinemaId) {
+    return ResponseEntity.ok(cinemaService.getCinemaHallsByCinemaId(cinemaId));
+  }
+
+  @Override
+  public ResponseEntity<List<GetSeatDto>> getSeatsByCinemaHallId(UUID cinemaHallId) {
+    return ResponseEntity.ok(cinemaService.getSeatsByCinemaHallId(cinemaHallId));
   }
 
   @Override
@@ -61,8 +67,15 @@ public class CinemaControllerImpl implements ICinemaController {
   }
 
   @Override
+  public ResponseEntity<CinemaInfoDto> getCinema(UUID id) {
+    return cinemaService.getCinema(id)
+        .map(ResponseEntity::ok)
+        .orElseGet(() -> ResponseEntity.notFound().build());
+  }
+
+  @Override
   public ResponseEntity<List<CinemaInfoDto>> getCinemaByCity(String city) {
-    return ResponseEntity.ok(cinemaService.getCinemasByCity());
+    return ResponseEntity.ok(cinemaService.getCinemasByCity(city));
   }
 
   @Override

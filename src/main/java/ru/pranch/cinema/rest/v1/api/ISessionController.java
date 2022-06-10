@@ -33,9 +33,6 @@ public interface ISessionController {
   @GetMapping(value = "/cinema/{cinemaId}", produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<List<SessionInfoDto>> getSessionInfoByCinemaId(@PathVariable UUID cinemaId);
 
-  @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  ResponseEntity<Session> getSession(@PathVariable UUID id);
-
   @PostMapping(value = "/control", consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<Session> addSession(@RequestBody CreateSessionDto createSessionDto);

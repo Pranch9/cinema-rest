@@ -2,11 +2,19 @@ package ru.pranch.cinema.dto;
 
 import java.util.UUID;
 
-public class CreateSeatDto {
+public class GetSeatDto {
+  private UUID id;
   private int rowNumber;
   private int place;
   private boolean isBooked = false;
-  private UUID cinemaHallId;
+
+  public UUID getId() {
+    return id;
+  }
+
+  public void setId(UUID id) {
+    this.id = id;
+  }
 
   public int getRowNumber() {
     return rowNumber;
@@ -32,11 +40,4 @@ public class CreateSeatDto {
     isBooked = booked;
   }
 
-  public UUID getCinemaHallId() {
-    return cinemaHallId;
-  }
-
-  public void setCinemaHallId(UUID cinemaHallId) {
-    this.cinemaHallId = cinemaHallId;
-  }
 }

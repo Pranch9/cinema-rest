@@ -21,7 +21,7 @@ public interface ITicketController {
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<List<Ticket>> getTickets();
 
-  @GetMapping(value = "/ticket/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<Ticket> getTicket(@PathVariable UUID id);
 
   @GetMapping(value = "/bookings/{sessionId}", produces = MediaType.APPLICATION_JSON_VALUE)

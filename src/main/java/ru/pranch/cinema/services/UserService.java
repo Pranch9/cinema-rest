@@ -2,11 +2,11 @@ package ru.pranch.cinema.services;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
 import ru.pranch.cinema.dao.UserDao;
 import ru.pranch.cinema.dto.CreateUserDto;
+import ru.pranch.cinema.dto.GetUserDto;
 import ru.pranch.cinema.mapper.UserMapper;
 import ru.pranch.cinema.model.User;
 import ru.pranch.cinema.utils.PasswordUtil;
@@ -19,27 +19,27 @@ public class UserService {
     this.userDao = userDao;
   }
 
-  public List<User> getUsers() {
-    return userDao.findAll();
+  public List<GetUserDto> getUsers() {
+    return userDao.findAll().stream().map(UserMapper::mapGetUserDto).toList();
   }
 
-  public Optional<User> getUserById(UUID id) {
-    return userDao.findById(id);
+  public GetUserDto getUserById(UUID id) throws Exception {
+    return userDao.findById(id).map(UserMapper::mapGetUserDto).orElseThrow(Exception::new);
   }
 
-  public Optional<User> getUserByUsername(String username) {
-    return userDao.findByUsername(username);
+  public GetUserDto getUserByUsername(String username) throws Exception {
+    return userDao.findByUsername(username).map(UserMapper::mapGetUserDto).orElseThrow(Exception::new);
   }
 
-  public Optional<User> getUserByMail(String mail) {
-    return userDao.findByMail(mail);
+  public GetUserDto getUserByMail(String mail) throws Exception {
+    return userDao.findByMail(mail).map(UserMapper::mapGetUserDto).orElseThrow(Exception::new);
   }
 
   public int deleteUser(UUID id) {
     return userDao.deleteById(id);
   }
 
-  public User addUser(CreateUserDto createUserDto) throws Exception {
+  public GetUserDto addUser(CreateUserDto createUserDto) throws Exception {
     if (checkMailAndUsernameAvailability(createUserDto)) {
       throw new Exception();
     }
@@ -48,10 +48,10 @@ public class UserService {
     user.setCreationDate(new Date());
     user.setPassword(PasswordUtil.encode(createUserDto.getPassword()));
 
-    return userDao.save(user);
+    return UserMapper.mapGetUserDto(userDao.save(user));
   }
 
-  public Optional<User> editUser(UUID id, CreateUserDto createUserDto) throws Exception {
+  public GetUserDto editUser(UUID id, CreateUserDto createUserDto) throws Exception {
     if (checkMailAndUsernameAvailability(createUserDto)) {
       throw new Exception();
     }
@@ -62,7 +62,7 @@ public class UserService {
     user.setCreationDate(userFromDb.getCreationDate());
     user.setPassword(PasswordUtil.encode(createUserDto.getPassword()));
 
-    return userDao.update(id, user);
+    return userDao.update(id, user).map(UserMapper::mapGetUserDto).orElseThrow(Exception::new);
   }
 
   private boolean checkMailAndUsernameAvailability(CreateUserDto createUserDto) {

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.pranch.cinema.dto.CreateUserDto;
-import ru.pranch.cinema.model.User;
+import ru.pranch.cinema.dto.GetUserDto;
 import ru.pranch.cinema.rest.v1.api.IUserController;
 import ru.pranch.cinema.services.UserService;
 
@@ -20,33 +20,39 @@ public class UserControllerImpl implements IUserController {
   }
 
   @Override
-  public ResponseEntity<List<User>> getUsers() {
+  public ResponseEntity<List<GetUserDto>> getUsers() {
     return ResponseEntity.ok(userService.getUsers());
   }
 
   @Override
-  public ResponseEntity<User> getUser(UUID id) {
-    return userService.getUserById(id)
-        .map(ResponseEntity::ok)
-        .orElseGet(() -> ResponseEntity.notFound().build());
+  public ResponseEntity<GetUserDto> getUser(UUID id) {
+    try {
+      return ResponseEntity.ok(userService.getUserById(id));
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @Override
-  public ResponseEntity<User> getUserByUsername(String username) {
-    return userService.getUserByUsername(username)
-        .map(ResponseEntity::ok)
-        .orElseGet(() -> ResponseEntity.notFound().build());
+  public ResponseEntity<GetUserDto> getUserByUsername(String username) {
+    try {
+      return ResponseEntity.ok(userService.getUserByUsername(username));
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @Override
-  public ResponseEntity<User> getUserByMail(String mail) {
-    return userService.getUserByMail(mail)
-        .map(ResponseEntity::ok)
-        .orElseGet(() -> ResponseEntity.notFound().build());
+  public ResponseEntity<GetUserDto> getUserByMail(String mail) {
+    try {
+      return ResponseEntity.ok(userService.getUserByMail(mail));
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @Override
-  public ResponseEntity<User> addUser(CreateUserDto createUserDto) {
+  public ResponseEntity<GetUserDto> addUser(CreateUserDto createUserDto) {
     try {
       return ResponseEntity.ok(userService.addUser(createUserDto));
     } catch (Exception e) {
@@ -55,11 +61,9 @@ public class UserControllerImpl implements IUserController {
   }
 
   @Override
-  public ResponseEntity<User> editUser(CreateUserDto createUserDto, UUID id) {
+  public ResponseEntity<GetUserDto> editUser(CreateUserDto createUserDto, UUID id) {
     try {
-      return userService.editUser(id, createUserDto)
-          .map(ResponseEntity::ok)
-          .orElseGet(() -> ResponseEntity.notFound().build());
+      return ResponseEntity.ok(userService.editUser(id, createUserDto));
     } catch (Exception e) {
       throw new RuntimeException(e);
     }

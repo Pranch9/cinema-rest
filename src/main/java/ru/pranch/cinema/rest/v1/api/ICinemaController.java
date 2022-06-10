@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.pranch.cinema.dto.cinema.CreateCinemaDto;
+import ru.pranch.cinema.dto.GetSeatDto;
 import ru.pranch.cinema.dto.cinema.CinemaInfoDto;
+import ru.pranch.cinema.dto.cinema.CreateCinemaDto;
 import ru.pranch.cinema.dto.cinema.UpdateCinemaDto;
+import ru.pranch.cinema.dto.cinema_hall.GetCinemaHallDto;
 import ru.pranch.cinema.model.Cinema;
 
 @RequestMapping(value = "/api/v1/cinemas")
@@ -21,11 +23,17 @@ public interface ICinemaController {
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<List<Cinema>> getCinemas();
 
-  @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  ResponseEntity<Cinema> getCinema(@PathVariable UUID id);
+  @GetMapping(value = "/cinemaHalls/{cinemaId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  ResponseEntity<List<GetCinemaHallDto>> getCinemaHallByCinemaId(@PathVariable UUID cinemaId);
+
+  @GetMapping(value = "/seats/{cinemaHallId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  ResponseEntity<List<GetSeatDto>> getSeatsByCinemaHallId(@PathVariable UUID cinemaHallId);
 
   @GetMapping(value = "/name/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<CinemaInfoDto> getCinemaByName(@PathVariable String name);
+
+  @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  ResponseEntity<CinemaInfoDto> getCinema(@PathVariable UUID id);
 
   @GetMapping(value = "/city/{city}", produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<List<CinemaInfoDto>> getCinemaByCity(@PathVariable String city);
