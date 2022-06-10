@@ -6,7 +6,6 @@ import ru.pranch.cinema.model.User;
 public class UserMapper {
   public static User mapUser(CreateUserDto createUserDto) {
     User user = new User();
-    user.setCreationDate(createUserDto.getCreationDate());
     user.setMail(createUserDto.getMail());
     user.setPassword(createUserDto.getPassword());
     user.setUsername(createUserDto.getUsername());

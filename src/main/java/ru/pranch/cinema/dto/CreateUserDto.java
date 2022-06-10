@@ -6,7 +6,6 @@ public class CreateUserDto {
   private String username;
   private String mail;
   private char[] password;
-  private Date creationDate;
 
   public String getUsername() {
     return username;
@@ -30,13 +29,5 @@ public class CreateUserDto {
 
   public void setPassword(char[] password) {
     this.password = password;
-  }
-
-  public Date getCreationDate() {
-    return creationDate;
-  }
-
-  public void setCreationDate(Date creationDate) {
-    this.creationDate = creationDate;
   }
 }

@@ -1,6 +1,7 @@
 package ru.pranch.cinema.enums;
 
 public enum TableName {
+  ADDRESS("addresses"),
   CINEMA("cinemas"),
   CINEMAHALL("cinema_halls"),
   MOVIE("movies"),

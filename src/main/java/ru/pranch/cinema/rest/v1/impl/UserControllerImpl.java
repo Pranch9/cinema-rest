@@ -27,35 +27,47 @@ public class UserControllerImpl implements IUserController {
   @Override
   public ResponseEntity<User> getUser(UUID id) {
     return userService.getUserById(id)
-      .map(ResponseEntity::ok)
-      .orElseGet(() -> ResponseEntity.notFound().build());
+        .map(ResponseEntity::ok)
+        .orElseGet(() -> ResponseEntity.notFound().build());
   }
 
   @Override
   public ResponseEntity<User> getUserByUsername(String username) {
-    return null;
+    return userService.getUserByUsername(username)
+        .map(ResponseEntity::ok)
+        .orElseGet(() -> ResponseEntity.notFound().build());
   }
 
   @Override
   public ResponseEntity<User> getUserByMail(String mail) {
-    return null;
+    return userService.getUserByMail(mail)
+        .map(ResponseEntity::ok)
+        .orElseGet(() -> ResponseEntity.notFound().build());
   }
 
   @Override
   public ResponseEntity<User> addUser(CreateUserDto createUserDto) {
-    return ResponseEntity.ok(userService.addUser(createUserDto));
+    try {
+      return ResponseEntity.ok(userService.addUser(createUserDto));
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @Override
   public ResponseEntity<User> editUser(CreateUserDto createUserDto, UUID id) {
-    return userService.editUser(id, createUserDto)
-      .map(ResponseEntity::ok)
-      .orElseGet(() -> ResponseEntity.notFound().build());
+    try {
+      return userService.editUser(id, createUserDto)
+          .map(ResponseEntity::ok)
+          .orElseGet(() -> ResponseEntity.notFound().build());
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @Override
   public ResponseEntity<Integer> deleteUser(UUID id) {
-    return null;
+    return ResponseEntity.ok(userService.deleteUser(id));
   }
 
 }

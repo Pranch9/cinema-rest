@@ -1,6 +1,7 @@
 val junitJupiterVersion: String by project
 val jdbiVersion: String by project
 val springDocOpenApiVersion: String by project
+val bcryptVersion: String by project
 
 plugins {
     id("java")
@@ -20,6 +21,7 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-ui:$springDocOpenApiVersion")
     implementation("org.jdbi:jdbi3-spring5:$jdbiVersion")
     implementation("org.flywaydb:flyway-core")
+    implementation("at.favre.lib:bcrypt:$bcryptVersion")
 
     runtimeOnly("org.postgresql:postgresql")
     runtimeOnly("com.h2database:h2")
