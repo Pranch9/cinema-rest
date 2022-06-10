@@ -1,7 +1,7 @@
 package ru.pranch.cinema.mapper;
 
-import ru.pranch.cinema.dto.CreateUserDto;
-import ru.pranch.cinema.dto.GetUserDto;
+import ru.pranch.cinema.dto.user.CreateUserDto;
+import ru.pranch.cinema.dto.user.GetUserDto;
 import ru.pranch.cinema.model.User;
 
 public class UserMapper {

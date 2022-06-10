@@ -44,6 +44,7 @@ public class TicketService {
   }
 
   public List<Ticket> addTickets(CreateTicketDto createTicketDto) throws Exception {
+    UUID sessionId = createTicketDto.getSessionId();
     User user = UserMapper.mapUser(createTicketDto.getCreateUserDto());
 
     User userFromDb = userDao.findByUsername(user.getUsername())
@@ -52,18 +53,26 @@ public class TicketService {
           return userDao.save(user);
         });
 
-    List<Seat> bookingSeats = createTicketDto.getSeats();
-    if (!checkSeatAvailability(bookingSeats, createTicketDto.getSessionId())) {
+    List<Seat> seats = createTicketDto.getCreateSeatDtos()
+        .stream()
+        .map(s -> seatDao.findSeatsByPlaceAndRow(s.getRowNumber(), s.getPlace(), sessionId).get())
+        .toList();
+
+    if (!checkSeatAvailability(seats, createTicketDto.getSessionId())) {
       throw new Exception();
     }
 
-    List<Ticket> tickets = bookingSeats
+    List<Ticket> tickets = seats
         .stream()
         .map(seat -> {
           Ticket ticket = TicketMapper.mapTicket(createTicketDto);
           ticket.setUserId(userFromDb.getId());
           ticket.setSeatId(seat.getId());
-          return ticketDao.save(ticket);
+
+          seat.setBooked(true);
+          seatDao.update(seat.getId(), seat);
+
+          return ticket;
         }).toList();
 
     return ticketDao.saveAll(tickets);

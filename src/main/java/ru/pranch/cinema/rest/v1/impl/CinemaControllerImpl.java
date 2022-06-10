@@ -5,13 +5,12 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-import ru.pranch.cinema.dto.GetSeatDto;
+import ru.pranch.cinema.dto.seat.GetSeatDto;
 import ru.pranch.cinema.dto.cinema.CreateCinemaDto;
 import ru.pranch.cinema.dto.cinema.CinemaInfoDto;
 import ru.pranch.cinema.dto.cinema.UpdateCinemaDto;
 import ru.pranch.cinema.dto.cinema_hall.GetCinemaHallDto;
 import ru.pranch.cinema.model.Cinema;
-import ru.pranch.cinema.model.CinemaHall;
 import ru.pranch.cinema.rest.v1.api.ICinemaController;
 import ru.pranch.cinema.services.CinemaService;
 

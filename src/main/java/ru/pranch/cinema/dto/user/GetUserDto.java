@@ -1,4 +1,4 @@
-package ru.pranch.cinema.dto;
+package ru.pranch.cinema.dto.user;
 
 import java.util.Date;
 import java.util.UUID;

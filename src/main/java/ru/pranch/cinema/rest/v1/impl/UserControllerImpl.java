@@ -5,8 +5,8 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-import ru.pranch.cinema.dto.CreateUserDto;
-import ru.pranch.cinema.dto.GetUserDto;
+import ru.pranch.cinema.dto.user.CreateUserDto;
+import ru.pranch.cinema.dto.user.GetUserDto;
 import ru.pranch.cinema.rest.v1.api.IUserController;
 import ru.pranch.cinema.services.UserService;
 

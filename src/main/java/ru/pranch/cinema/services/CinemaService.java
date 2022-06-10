@@ -12,7 +12,7 @@ import ru.pranch.cinema.dao.CinemaInfoDao;
 import ru.pranch.cinema.dao.SeatDao;
 import ru.pranch.cinema.dao.SessionDao;
 import ru.pranch.cinema.dto.CreateAddressDto;
-import ru.pranch.cinema.dto.GetSeatDto;
+import ru.pranch.cinema.dto.seat.GetSeatDto;
 import ru.pranch.cinema.dto.cinema.CinemaInfoDto;
 import ru.pranch.cinema.dto.cinema.CreateCinemaDto;
 import ru.pranch.cinema.dto.cinema.UpdateCinemaDto;

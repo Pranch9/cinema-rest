@@ -1,4 +1,4 @@
-package ru.pranch.cinema.dto;
+package ru.pranch.cinema.dto.seat;
 
 import java.util.UUID;
 
