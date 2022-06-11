@@ -1,9 +1,11 @@
 package ru.pranch.cinema.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Date;
 import java.util.UUID;
 
 public class CreateSessionDto {
+  @JsonProperty(value = "movie")
   private CreateMovieDto createMovieDto;
   private UUID cinemaHallId;
   private Date sessionDate;

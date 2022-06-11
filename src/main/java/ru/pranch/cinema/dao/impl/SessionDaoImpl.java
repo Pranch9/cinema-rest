@@ -42,7 +42,7 @@ public class SessionDaoImpl extends BasicDaoImpl<Session> implements SessionDao 
   public List<Session> findAllByCinemaHallId(UUID cinemaHallId) {
     return jdbi.withHandle(handle ->
         handle.createQuery("""
-                select * from sessions where cinema_hall_id = :cinemaRoomId;
+                select * from sessions where cinema_hall_id = :cinemaHallId;
                 """)
             .bind("cinemaHallId", cinemaHallId)
             .mapToBean(Session.class)

@@ -1,13 +1,16 @@
 package ru.pranch.cinema.dto.cinema;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import ru.pranch.cinema.dto.CreateAddressDto;
-import ru.pranch.cinema.dto.cinema_hall.UpdateCinemaHallDto;
+import ru.pranch.cinema.dto.cinema_hall.CreateCinemaHallDto;
 
 public class UpdateCinemaDto {
   private String cinemaName;
+  @JsonProperty(value = "address")
   private CreateAddressDto createAddressDto;
-  private List<UpdateCinemaHallDto> updateCinemaHallDtos;
+  @JsonProperty(value = "cinemaHalls")
+  private List<CreateCinemaHallDto> createCinemaHallDtos;
 
   public String getCinemaName() {
     return cinemaName;
@@ -25,11 +28,11 @@ public class UpdateCinemaDto {
     this.createAddressDto = createAddressDto;
   }
 
-  public List<UpdateCinemaHallDto> getUpdateCinemaHallDtos() {
-    return updateCinemaHallDtos;
+  public List<CreateCinemaHallDto> getCreateCinemaHallDtos() {
+    return createCinemaHallDtos;
   }
 
-  public void setUpdateCinemaHallDtos(List<UpdateCinemaHallDto> updateCinemaHallDtos) {
-    this.updateCinemaHallDtos = updateCinemaHallDtos;
+  public void setCreateCinemaHallDtos(List<CreateCinemaHallDto> createCinemaHallDtos) {
+    this.createCinemaHallDtos = createCinemaHallDtos;
   }
 }

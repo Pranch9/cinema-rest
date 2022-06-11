@@ -1,12 +1,15 @@
 package ru.pranch.cinema.dto.cinema;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import ru.pranch.cinema.dto.CreateAddressDto;
 import ru.pranch.cinema.dto.cinema_hall.CreateCinemaHallDto;
 
 public class CreateCinemaDto {
   private String cinemaName;
+  @JsonProperty(value = "address")
   private CreateAddressDto createAddressDto;
+  @JsonProperty(value = "cinemaHalls")
   private List<CreateCinemaHallDto> createCinemaHallDtos;
 
   public String getCinemaName() {

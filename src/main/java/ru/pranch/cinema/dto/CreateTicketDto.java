@@ -1,5 +1,6 @@
 package ru.pranch.cinema.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import java.util.UUID;
 import ru.pranch.cinema.dto.seat.CreateSeatDto;
@@ -9,7 +10,9 @@ import ru.pranch.cinema.model.Seat;
 
 public class CreateTicketDto {
   private UUID sessionId;
+  @JsonProperty(value = "seats")
   private List<CreateSeatDto> createSeatDtos;
+  @JsonProperty(value = "user")
   private CreateUserDto createUserDto;
   private Status status;
   private double price;

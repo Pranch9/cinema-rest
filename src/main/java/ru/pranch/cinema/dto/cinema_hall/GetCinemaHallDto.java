@@ -4,10 +4,9 @@ import java.util.UUID;
 
 public class GetCinemaHallDto {
   private UUID id;
-
   private String hallName;
   private int rowsNumber;
-  private int placeNumber;
+  private int placesNumber;
 
   public UUID getId() {
     return id;
@@ -33,11 +32,11 @@ public class GetCinemaHallDto {
     this.rowsNumber = rowsNumber;
   }
 
-  public int getPlaceNumber() {
-    return placeNumber;
+  public int getPlacesNumber() {
+    return placesNumber;
   }
 
-  public void setPlaceNumber(int placeNumber) {
-    this.placeNumber = placeNumber;
+  public void setPlacesNumber(int placesNumber) {
+    this.placesNumber = placesNumber;
   }
 }
