@@ -20,8 +20,8 @@ public class MovieService {
     this.movieDao = movieDao;
   }
 
-  public List<Movie> getMovies() {
-    return movieDao.findAll();
+  public List<Movie> getMovies(String title, MovieGenre movieGenre) {
+    return movieDao.findAll(title, movieGenre);
   }
 
   public Optional<Movie> getMovieById(UUID id) {
@@ -36,15 +36,20 @@ public class MovieService {
     return movieDao.findMoviesByGenre(movieGenre);
   }
 
-  public List<Movie> addMovies(List<CreateMovieDto> movies) {
+  public List<Movie> addMovies(List<CreateMovieDto> movies) throws Exception {
+    boolean isUniqueTitle = movies.stream().anyMatch(m -> movieDao.findByTitle(m.getTitle()).isPresent());
+    if (isUniqueTitle) {
+      throw new Exception("Not unique movie title");
+    }
     return movieDao.saveAll(movies
-        .stream()
-        .map(MovieMapper::mapMovie)
-        .toList());
+      .stream()
+      .map(MovieMapper::mapMovie)
+      .toList());
   }
 
   public Optional<Movie> editMovie(UUID id, CreateMovieDto movie) throws Exception {
-    if (movieDao.findByTitle(movie.getTitle()).isPresent()) {
+    Optional<Movie> movieFromDb = movieDao.findByTitle(movie.getTitle());
+    if (movieFromDb.isPresent() && !id.equals(movieFromDb.get().getId())) {
       throw new Exception("Movie with title = {" + movie.getTitle() + "} already exist!");
     }
     return movieDao.update(id, MovieMapper.mapMovie(movie));

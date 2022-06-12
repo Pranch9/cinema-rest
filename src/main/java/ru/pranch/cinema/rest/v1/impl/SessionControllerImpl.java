@@ -1,14 +1,16 @@
 package ru.pranch.cinema.rest.v1.impl;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-import ru.pranch.cinema.dto.CreateSessionDto;
-import ru.pranch.cinema.dto.SessionInfoDto;
-import ru.pranch.cinema.model.Session;
+import ru.pranch.cinema.dto.session.CreateSessionDto;
+import ru.pranch.cinema.dto.session.ResponseCreateSessionDto;
+import ru.pranch.cinema.dto.session.ResponseUpdateSessionDto;
+import ru.pranch.cinema.dto.session.SessionInfoDto;
+import ru.pranch.cinema.dto.session.UpdateSessionDto;
 import ru.pranch.cinema.rest.v1.api.ISessionController;
 import ru.pranch.cinema.services.SessionService;
 
@@ -22,32 +24,19 @@ public class SessionControllerImpl implements ISessionController {
   }
 
   @Override
-  public ResponseEntity<List<SessionInfoDto>> getSessionInfoByDate(Date date) {
-    return ResponseEntity.ok(sessionService.getSessionInfoByDate(date));
+  public ResponseEntity<List<SessionInfoDto>> getSessionsInfo(LocalDateTime date, UUID movieId, UUID cinemaId) {
+    return ResponseEntity.ok(sessionService.getSessionsInfo(date, movieId, cinemaId));
   }
 
   @Override
-  public ResponseEntity<List<SessionInfoDto>> getSessionInfoByValue(String value) {
-    return ResponseEntity.ok(sessionService.getSessionInfoByValue(value));
+  public ResponseEntity<SessionInfoDto> getSessionInfoById(UUID id) {
+    return sessionService.getSessionInfoById(id)
+      .map(ResponseEntity::ok)
+      .orElseGet(() -> ResponseEntity.notFound().build());
   }
 
   @Override
-  public ResponseEntity<List<SessionInfoDto>> getSessionInfoByMovie(UUID movieId) {
-    return ResponseEntity.ok(sessionService.getSessionInfoByMovie(movieId));
-  }
-
-  @Override
-  public ResponseEntity<List<SessionInfoDto>> getSessionInfoByCinemaId(UUID cinemaId) {
-    return ResponseEntity.ok(sessionService.getSessionInfoByCinemaId(cinemaId));
-  }
-
-  @Override
-  public ResponseEntity<List<SessionInfoDto>> getSessionsInfo() {
-    return ResponseEntity.ok(sessionService.getSessionsInfo());
-  }
-
-  @Override
-  public ResponseEntity<Session> addSession(CreateSessionDto createSessionDto) {
+  public ResponseEntity<ResponseCreateSessionDto> addSession(CreateSessionDto createSessionDto) {
     try {
       return ResponseEntity.ok(sessionService.addSession(createSessionDto));
     } catch (Exception e) {
@@ -56,13 +45,11 @@ public class SessionControllerImpl implements ISessionController {
   }
 
   @Override
-  public ResponseEntity<Session> editSession(CreateSessionDto createSessionDto, UUID id) {
+  public ResponseEntity<ResponseUpdateSessionDto> editSession(UpdateSessionDto updateSessionDto, UUID id, UUID cinemaHallId) {
     try {
-      return sessionService.editSession(id, createSessionDto)
-          .map(ResponseEntity::ok)
-          .orElseGet(() -> ResponseEntity.notFound().build());
+      return ResponseEntity.ok(sessionService.editSession(id, cinemaHallId, updateSessionDto));
     } catch (Exception e) {
-      return ResponseEntity.unprocessableEntity().build();
+      return ResponseEntity.badRequest().build();
     }
   }
 

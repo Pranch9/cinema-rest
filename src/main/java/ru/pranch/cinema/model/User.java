@@ -1,6 +1,6 @@
 package ru.pranch.cinema.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class User {
@@ -8,7 +8,7 @@ public class User {
   private String username;
   private String mail;
   private String password;
-  private Date creationDate;
+  private LocalDateTime creationDate;
 
   public User() {
     this.id = UUID.randomUUID();
@@ -46,22 +46,22 @@ public class User {
     this.password = password;
   }
 
-  public Date getCreationDate() {
+  public LocalDateTime getCreationDate() {
     return creationDate;
   }
 
-  public void setCreationDate(Date creationDate) {
+  public void setCreationDate(LocalDateTime creationDate) {
     this.creationDate = creationDate;
   }
 
   @Override
   public String toString() {
     return "User{" +
-        "id=" + id +
-        ", username='" + username + '\'' +
-        ", mail='" + mail + '\'' +
-        ", password='" + password + '\'' +
-        ", creationDate=" + creationDate +
-        '}';
+      "id=" + id +
+      ", username='" + username + '\'' +
+      ", mail='" + mail + '\'' +
+      ", password='" + password + '\'' +
+      ", creationDate=" + creationDate +
+      '}';
   }
 }

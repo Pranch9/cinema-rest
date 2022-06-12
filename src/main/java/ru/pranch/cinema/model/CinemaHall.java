@@ -6,7 +6,7 @@ public class CinemaHall {
   private UUID id;
   private String hallName;
   private int rowsNumber;
-  private int placeNumber;
+  private int placesNumber;
   private UUID cinemaId;
 
   public CinemaHall() {
@@ -37,12 +37,12 @@ public class CinemaHall {
     this.rowsNumber = rowsNumber;
   }
 
-  public int getPlaceNumber() {
-    return placeNumber;
+  public int getPlacesNumber() {
+    return placesNumber;
   }
 
-  public void setPlaceNumber(int placeNumber) {
-    this.placeNumber = placeNumber;
+  public void setPlacesNumber(int placesNumber) {
+    this.placesNumber = placesNumber;
   }
 
   public UUID getCinemaId() {
@@ -59,7 +59,7 @@ public class CinemaHall {
       "id=" + id +
       ", hallName='" + hallName + '\'' +
       ", rowsNumber=" + rowsNumber +
-      ", placeNumber=" + placeNumber +
+      ", placeNumber=" + placesNumber +
       ", cinemaId=" + cinemaId +
       '}';
   }

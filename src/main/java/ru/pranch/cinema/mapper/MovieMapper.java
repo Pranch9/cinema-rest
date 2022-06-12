@@ -8,6 +8,7 @@ public class MovieMapper {
     Movie movie = new Movie();
     movie.setMovieGenre(movieDao.getMovieGenre());
     movie.setTitle(movieDao.getTitle());
+    movie.setLength(movieDao.getLength());
 
     return movie;
   }

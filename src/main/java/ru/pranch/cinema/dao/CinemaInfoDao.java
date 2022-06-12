@@ -3,7 +3,6 @@ package ru.pranch.cinema.dao;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import ru.pranch.cinema.dto.SessionInfoDto;
 import ru.pranch.cinema.dto.cinema.CinemaInfoDto;
 
 public interface CinemaInfoDao {
@@ -13,5 +12,5 @@ public interface CinemaInfoDao {
 
   Optional<CinemaInfoDto> findByName(String name);
 
-  List<CinemaInfoDto> findAll();
+  List<CinemaInfoDto> findAll(String name, String city);
 }

@@ -1,13 +1,13 @@
 package ru.pranch.cinema.dto.user;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class GetUserDto {
   private UUID id;
   private String username;
   private String mail;
-  private Date creationDate;
+  private LocalDateTime creationDate;
 
   public UUID getId() {
     return id;
@@ -33,11 +33,11 @@ public class GetUserDto {
     this.mail = mail;
   }
 
-  public Date getCreationDate() {
+  public LocalDateTime getCreationDate() {
     return creationDate;
   }
 
-  public void setCreationDate(Date creationDate) {
+  public void setCreationDate(LocalDateTime creationDate) {
     this.creationDate = creationDate;
   }
 }

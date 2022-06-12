@@ -1,14 +1,15 @@
-package ru.pranch.cinema.dto;
+package ru.pranch.cinema.dto.session;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.UUID;
+import ru.pranch.cinema.dto.CreateMovieDto;
 
 public class CreateSessionDto {
   @JsonProperty(value = "movie")
   private CreateMovieDto createMovieDto;
   private UUID cinemaHallId;
-  private Date sessionDate;
+  private LocalDateTime sessionDate;
 
   public CreateMovieDto getCreateMovieDto() {
     return createMovieDto;
@@ -26,11 +27,11 @@ public class CreateSessionDto {
     this.cinemaHallId = cinemaHallId;
   }
 
-  public Date getSessionDate() {
+  public LocalDateTime getSessionDate() {
     return sessionDate;
   }
 
-  public void setSessionDate(Date sessionDate) {
+  public void setSessionDate(LocalDateTime sessionDate) {
     this.sessionDate = sessionDate;
   }
 }

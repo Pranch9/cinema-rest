@@ -19,12 +19,12 @@ spring:
     activate:
       on-profile: test
   datasource:
-    url: jdbc:h2:mem:cinema
+    url: jdbc:h2:mem:cinema_db_test;DB_CLOSE_DELAY=-1
     username: sa
     password:
     driver-class-name: org.h2.Driver
   flyway:
     enabled: true
-    url: jdbc:h2:mem:cinema
+    url: jdbc:h2:mem:cinema_db_test;DB_CLOSE_DELAY=-1
     user: sa
     password:

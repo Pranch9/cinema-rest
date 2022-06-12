@@ -49,7 +49,7 @@ public class CinemaMapper {
     CinemaHall cinemaHall = new CinemaHall();
     cinemaHall.setHallName(cinemaHallDto.getHallName());
     cinemaHall.setRowsNumber(cinemaHallDto.getRowsNumber());
-    cinemaHall.setPlaceNumber(cinemaHallDto.getPlacesNumber());
+    cinemaHall.setPlacesNumber(cinemaHallDto.getPlacesNumber());
 
     return cinemaHall;
   }
@@ -58,7 +58,7 @@ public class CinemaMapper {
     GetCinemaHallDto getCinemaHallDto = new GetCinemaHallDto();
     getCinemaHallDto.setHallName(cinemaHall.getHallName());
     getCinemaHallDto.setId(cinemaHall.getId());
-    getCinemaHallDto.setPlacesNumber(cinemaHall.getPlaceNumber());
+    getCinemaHallDto.setPlacesNumber(cinemaHall.getPlacesNumber());
     getCinemaHallDto.setRowsNumber(cinemaHall.getRowsNumber());
 
     return getCinemaHallDto;
@@ -67,7 +67,7 @@ public class CinemaMapper {
   public static CreateCinemaHallDto mapCreateCinemaHall(CinemaHall cinemaHall) {
     CreateCinemaHallDto createCinemaHallDto = new CreateCinemaHallDto();
     createCinemaHallDto.setHallName(cinemaHall.getHallName());
-    createCinemaHallDto.setPlacesNumber(cinemaHall.getPlaceNumber());
+    createCinemaHallDto.setPlacesNumber(cinemaHall.getPlacesNumber());
     createCinemaHallDto.setRowsNumber(cinemaHall.getRowsNumber());
 
     return createCinemaHallDto;

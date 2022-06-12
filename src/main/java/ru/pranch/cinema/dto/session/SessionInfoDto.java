@@ -1,6 +1,6 @@
-package ru.pranch.cinema.dto;
+package ru.pranch.cinema.dto.session;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class SessionInfoDto {
@@ -9,7 +9,7 @@ public class SessionInfoDto {
   private String cinemaRoomName;
   private String movieTitle;
   private Integer length;
-  private Date sessionDate;
+  private LocalDateTime sessionDate;
 
   public UUID getId() {
     return id;
@@ -51,11 +51,11 @@ public class SessionInfoDto {
     this.length = length;
   }
 
-  public Date getSessionDate() {
+  public LocalDateTime getSessionDate() {
     return sessionDate;
   }
 
-  public void setSessionDate(Date sessionDate) {
+  public void setSessionDate(LocalDateTime sessionDate) {
     this.sessionDate = sessionDate;
   }
 }

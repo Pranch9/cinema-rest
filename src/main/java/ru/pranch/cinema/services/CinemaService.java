@@ -1,12 +1,10 @@
 package ru.pranch.cinema.services;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import ru.pranch.cinema.dao.AddressDao;
 import ru.pranch.cinema.dao.CinemaDao;
 import ru.pranch.cinema.dao.CinemaHallDao;
@@ -14,13 +12,13 @@ import ru.pranch.cinema.dao.CinemaInfoDao;
 import ru.pranch.cinema.dao.SeatDao;
 import ru.pranch.cinema.dao.SessionDao;
 import ru.pranch.cinema.dto.CreateAddressDto;
-import ru.pranch.cinema.dto.cinema.ResponseCreateCinemaDto;
-import ru.pranch.cinema.dto.seat.GetSeatDto;
 import ru.pranch.cinema.dto.cinema.CinemaInfoDto;
 import ru.pranch.cinema.dto.cinema.CreateCinemaDto;
+import ru.pranch.cinema.dto.cinema.ResponseCreateCinemaDto;
 import ru.pranch.cinema.dto.cinema.UpdateCinemaDto;
 import ru.pranch.cinema.dto.cinema_hall.CreateCinemaHallDto;
 import ru.pranch.cinema.dto.cinema_hall.GetCinemaHallDto;
+import ru.pranch.cinema.dto.seat.GetSeatDto;
 import ru.pranch.cinema.mapper.AddressMapper;
 import ru.pranch.cinema.mapper.CinemaMapper;
 import ru.pranch.cinema.model.Address;
@@ -48,44 +46,18 @@ public class CinemaService {
     this.sessionDao = sessionDao;
   }
 
-  /**
-   * Метод возвращает все имеющиеся кинотеатры из БД.
-   *
-   * @return список кинотеатров.
-   */
-
   public List<CinemaInfoDto> getCinemas(String cinemaName, String city) {
-    if (StringUtils.hasText(cinemaName)) {
-      return cinemaInfoDao.findByName(cinemaName).map(Collections::singletonList).orElse(Collections.emptyList());
-    } else if (StringUtils.hasText(city)) {
-      return cinemaInfoDao.findByCity(city);
-    }
-    return cinemaInfoDao.findAll();
+    return cinemaInfoDao.findAll(cinemaName, city);
   }
 
-  /**
-   * Метод возвращает кинотеатр по его идентификатору.
-   *
-   * @return кинотеатр.
-   */
   public List<GetCinemaHallDto> getCinemaHallsByCinemaId(UUID cinemaId) {
     return cinemaHallDao.findAllHallsFromCinema(cinemaId);
   }
 
-  /**
-   * @param name название кинотеатра для поиска.
-   * @return кинотеатр с данным именем.
-   */
   public Optional<CinemaInfoDto> getCinemaByName(String name) {
     return cinemaInfoDao.findByName(name);
   }
 
-  /**
-   * Метод используется для создания/добавления нового кинотетра.
-   *
-   * @param cinema кинотеатр для создания.
-   * @return созданный кинотеатр.
-   */
   public ResponseCreateCinemaDto addCinema(CreateCinemaDto cinema) throws Exception {
     if (cinemaDao.findByName(cinema.getCinemaName()).isPresent()) {
       throw new Exception("Cinema with title = {" + cinema.getCinemaName() + "} already exist!");
@@ -107,13 +79,6 @@ public class CinemaService {
     return CinemaMapper.mapResponseCreateCinema(cinemaFromDb, getCinemaHallDtos, addressFromDb);
   }
 
-  /**
-   * Метод обновляет данные по кинотеатру
-   *
-   * @param id              кинотеатр который будет обновлен.
-   * @param updateCinemaDto обновленные данные кинотеатра.
-   * @return обновленный кинотеатр.
-   */
   public CreateCinemaDto editCinema(UUID id, UpdateCinemaDto updateCinemaDto) throws Exception {
     Optional<Cinema> cinemaFromDb = cinemaDao.findById(id);
     if (cinemaFromDb.isEmpty())
@@ -132,13 +97,6 @@ public class CinemaService {
 
     return CinemaMapper.mapResponseUpdateCinema(updatedCinemaOpt.get(), createCinemaHallDtos, createAddressDto);
   }
-
-  /**
-   * Метод удаляет кинотеатр со всеми кинозалами и местами.
-   *
-   * @param cinemaId кинотеатр для удаления.
-   * @return количество удалений.
-   */
 
   public int deleteCinema(UUID cinemaId) {
     List<UUID> cinemaHallsIds = cinemaHallDao.findAllHallsFromCinema(cinemaId)
@@ -212,12 +170,12 @@ public class CinemaService {
           return cinemaHallDao.save(cinemaHall);
         });
       cinemaHallFromDb.setHallName(ch.getHallName());
-      cinemaHallFromDb.setPlaceNumber(ch.getPlacesNumber());
+      cinemaHallFromDb.setPlacesNumber(ch.getPlacesNumber());
       cinemaHallFromDb.setRowsNumber(ch.getRowsNumber());
 
       Optional<CinemaHall> cinemaHallOptional = cinemaHallDao.update(cinemaHallFromDb.getId(), cinemaHallFromDb);
       cinemaHallOptional.ifPresent(chu -> {
-        if (chu.getRowsNumber() != ch.getRowsNumber() || chu.getPlaceNumber() == ch.getPlacesNumber()) {
+        if (chu.getRowsNumber() != ch.getRowsNumber() || chu.getPlacesNumber() == ch.getPlacesNumber()) {
           try {
             addSeatsToCinemaHall(chu);
           } catch (Exception e) {
@@ -239,7 +197,7 @@ public class CinemaService {
   }
 
   private void addSeatsToCinemaHall(CinemaHall cinemaHall) throws Exception {
-    if (cinemaHall.getPlaceNumber() == 0 || cinemaHall.getRowsNumber() == 0)
+    if (cinemaHall.getPlacesNumber() == 0 || cinemaHall.getRowsNumber() == 0)
       throw new Exception("Cannot create cinema without seats");
 
     List<GetSeatDto> seatsByCinemaHall = seatDao.findSeatsByCinemaHall(cinemaHall.getId());
@@ -251,7 +209,7 @@ public class CinemaService {
     }
 
     for (int row = 1; row <= cinemaHall.getRowsNumber(); row++) {
-      for (int place = 1; place <= cinemaHall.getPlaceNumber(); place++) {
+      for (int place = 1; place <= cinemaHall.getPlacesNumber(); place++) {
         Seat seat = new Seat();
         seat.setCinemaHallId(cinemaHall.getId());
         seat.setRowNumber(row);

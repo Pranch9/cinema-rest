@@ -2,9 +2,11 @@ package ru.pranch.cinema.dao.impl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.StringJoiner;
 import java.util.UUID;
 import org.jdbi.v3.core.Jdbi;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 import ru.pranch.cinema.dao.CinemaInfoDao;
 import ru.pranch.cinema.dto.cinema.CinemaInfoDto;
 
@@ -54,11 +56,22 @@ public class CinemaInfoDaoImpl extends BasicDaoImpl<CinemaInfoDto> implements Ci
   }
 
   @Override
-  public List<CinemaInfoDto> findAll() {
+  public List<CinemaInfoDto> findAll(String name, String city) {
+    StringJoiner joiner = new StringJoiner(" and ", " where ", ";");
     String sql = selectAndJoinExpression + ";";
+    if (StringUtils.hasText(name) || StringUtils.hasText(city)) {
+      if (StringUtils.hasText(name)) {
+        joiner.add("cinema_name = '" + name + "'");
+      }
+      if (StringUtils.hasText(city)) {
+        joiner.add("city = '" + city + "'");
+      }
+      sql += joiner.toString();
+    }
 
+    String finalSql = sql;
     return jdbi.withHandle(handle -> handle
-      .createQuery(sql)
+      .createQuery(finalSql)
       .mapToBean(CinemaInfoDto.class)
       .list());
   }

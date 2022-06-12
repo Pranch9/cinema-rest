@@ -9,4 +9,6 @@ public interface MovieDao extends BasicDao<Movie> {
   Optional<Movie> findByTitle(String title);
 
   List<Movie> findMoviesByGenre(MovieGenre movieGenre);
+
+  List<Movie> findAll(String title, MovieGenre movieGenre);
 }
