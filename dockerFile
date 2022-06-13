@@ -1,4 +1,0 @@
-FROM gradle:7.4.2-jdk17-alpine as builder
-MAINTAINER Anatoly Prets <prets.anatoly@gmail.com>
-ENV SPRING_PROFILE=production
-RUN gradle clean build -x test

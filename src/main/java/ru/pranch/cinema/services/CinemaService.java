@@ -121,7 +121,8 @@ public class CinemaService {
         }
       });
 
-    cinemaHallDao.deleteAllById(cinemaHallsIds);
+    if (!cinemaHallsIds.isEmpty())
+      cinemaHallDao.deleteAllById(cinemaHallsIds);
 
     return cinemaDao.deleteById(cinemaId);
   }

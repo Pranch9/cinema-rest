@@ -13,6 +13,21 @@ public class CinemaHall {
     this.id = UUID.randomUUID();
   }
 
+  public CinemaHall(String hallName, int rowsNumber, int placesNumber, UUID cinemaId) {
+    this.hallName = hallName;
+    this.rowsNumber = rowsNumber;
+    this.placesNumber = placesNumber;
+    this.cinemaId = cinemaId;
+  }
+
+  public CinemaHall(UUID id, String hallName, int rowsNumber, int placesNumber, UUID cinemaId) {
+    this.id = id;
+    this.hallName = hallName;
+    this.rowsNumber = rowsNumber;
+    this.placesNumber = placesNumber;
+    this.cinemaId = cinemaId;
+  }
+
   public UUID getId() {
     return id;
   }
@@ -59,7 +74,7 @@ public class CinemaHall {
       "id=" + id +
       ", hallName='" + hallName + '\'' +
       ", rowsNumber=" + rowsNumber +
-      ", placeNumber=" + placesNumber +
+      ", placesNumber=" + placesNumber +
       ", cinemaId=" + cinemaId +
       '}';
   }

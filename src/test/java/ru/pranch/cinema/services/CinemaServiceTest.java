@@ -1,8 +1,8 @@
 package ru.pranch.cinema.services;
 
 import java.util.UUID;
-import org.jdbi.v3.core.Jdbi;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,7 +21,7 @@ class CinemaServiceTest {
   private final AddressDao addressDao;
 
   @Autowired
-  CinemaServiceTest(CinemaService cinemaService, CinemaDao cinemaDao, AddressDao addressDao, Jdbi jdbi) {
+  CinemaServiceTest(CinemaService cinemaService, CinemaDao cinemaDao, AddressDao addressDao) {
     this.cinemaService = cinemaService;
     this.cinemaDao = cinemaDao;
     this.addressDao = addressDao;

@@ -58,13 +58,13 @@ public class CinemaInfoDaoImpl extends BasicDaoImpl<CinemaInfoDto> implements Ci
   @Override
   public List<CinemaInfoDto> findAll(String name, String city) {
     StringJoiner joiner = new StringJoiner(" and ", " where ", ";");
-    String sql = selectAndJoinExpression + ";";
+    String sql = selectAndJoinExpression;
     if (StringUtils.hasText(name) || StringUtils.hasText(city)) {
       if (StringUtils.hasText(name)) {
-        joiner.add("cinema_name = '" + name + "'");
+        joiner.add("lower(cinema_name) = '" + name.toLowerCase() + "'");
       }
       if (StringUtils.hasText(city)) {
-        joiner.add("city = '" + city + "'");
+        joiner.add("lower(city) = '" + city.toLowerCase() + "'");
       }
       sql += joiner.toString();
     }

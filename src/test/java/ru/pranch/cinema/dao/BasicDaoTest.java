@@ -1,24 +1,15 @@
 package ru.pranch.cinema.dao;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import ru.pranch.cinema.model.Cinema;
 
 @SpringBootTest
+@Disabled
 class BasicDaoTest {
-
-  private final CinemaDao cinemaDao;
-
-  @Autowired
-  BasicDaoTest(CinemaDao cinemaDao) {
-    this.cinemaDao = cinemaDao;
-  }
 
   @Test
   void save() {
-    Cinema cinema = new Cinema();
-    cinemaDao.save(cinema);
   }
 
   @Test
