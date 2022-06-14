@@ -39,5 +39,4 @@ public interface IMovieController {
 
   @DeleteMapping(value = "/control")
   ResponseEntity<Integer> deleteMovies(@RequestBody List<UUID> ids);
-
 }

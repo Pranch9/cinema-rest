@@ -31,7 +31,7 @@ public class SeatDaoImpl extends BasicDaoImpl<Seat> implements SeatDao {
   public Optional<Seat> findSeatsByPlaceAndRow(int row, int place, UUID sessionId) {
     String sql = """
         select s.row_number as rowNumber, s.id as id, s.place as place, s.cinema_hall_id as cinemaHallId, s.booked as booked
-        from seats s join sessions s2 on s.cinema_hall_id = s2.cinema_hall_id where s.row_number = :row and s.place = :place and s2.id = : sessionId;
+        from seats s join sessions s2 on s.cinema_hall_id = s2.cinema_hall_id where s.row_number = :row and s.place = :place and s2.id = :sessionId;
         """;
     return jdbi.withHandle(handle ->
         handle.createQuery(sql)

@@ -20,7 +20,7 @@ public class UserControllerImpl implements IUserController {
   }
 
   @Override
-  public ResponseEntity<List<GetUserDto>> getUsers() {
+  public ResponseEntity<List<GetUserDto>> getUsers(String username, String mail) {
     return ResponseEntity.ok(userService.getUsers());
   }
 
@@ -28,24 +28,6 @@ public class UserControllerImpl implements IUserController {
   public ResponseEntity<GetUserDto> getUser(UUID id) {
     try {
       return ResponseEntity.ok(userService.getUserById(id));
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  @Override
-  public ResponseEntity<GetUserDto> getUserByUsername(String username) {
-    try {
-      return ResponseEntity.ok(userService.getUserByUsername(username));
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  @Override
-  public ResponseEntity<GetUserDto> getUserByMail(String mail) {
-    try {
-      return ResponseEntity.ok(userService.getUserByMail(mail));
     } catch (Exception e) {
       throw new RuntimeException(e);
     }

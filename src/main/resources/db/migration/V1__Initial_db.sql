@@ -67,11 +67,9 @@ create table if not exists tickets
 (
     id         uuid not null primary key,
     session_id uuid not null references sessions (id),
-    constraint tickets_session_id_key unique (session_id),
     seat_id    uuid not null references seats (id),
     constraint tickets_seat_id_key unique (seat_id),
     user_id    uuid not null references users (id),
-    constraint tickets_user_id_key unique (user_id),
     status     varchar(255),
     price      decimal
 );

@@ -29,16 +29,16 @@ public class TicketControllerImpl implements ITicketController {
   @Override
   public ResponseEntity<Ticket> getTicket(UUID id) {
     return ticketService.getTicketById(id)
-        .map(ResponseEntity::ok)
-        .orElseGet(() -> ResponseEntity.notFound().build());
+      .map(ResponseEntity::ok)
+      .orElseGet(() -> ResponseEntity.notFound().build());
   }
 
   @Override
-  public ResponseEntity<List<Booking>> getBookings(UUID id) {
+  public ResponseEntity<List<Booking>> getBookings(UUID sessionId) {
     try {
-      return ResponseEntity.ok(ticketService.getBookings(id));
+      return ResponseEntity.ok(ticketService.getBookings(sessionId));
     } catch (Exception e) {
-      throw new RuntimeException(e);
+      return ResponseEntity.notFound().build();
     }
   }
 
@@ -46,8 +46,8 @@ public class TicketControllerImpl implements ITicketController {
   public ResponseEntity<Ticket> updateTicketStatus(UUID id, Status status) {
     try {
       return ticketService.updateTicketsStatus(id, status)
-          .map(ResponseEntity::ok)
-          .orElseGet(() -> ResponseEntity.notFound().build());
+        .map(ResponseEntity::ok)
+        .orElseGet(() -> ResponseEntity.notFound().build());
     } catch (Exception e) {
       throw new RuntimeException(e);
     }

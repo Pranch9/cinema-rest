@@ -84,44 +84,6 @@ class CinemaControllerTest {
     addressDao.findAll().forEach(r -> addressDao.deleteById(r.getId()));
   }
 
-  private Cinema createCinema(String cinemaName, UUID addressId) {
-    Cinema cinema = new Cinema();
-    cinema.setCinemaName(cinemaName);
-    cinema.setAddressId(addressId);
-    return cinemaDao.save(cinema);
-  }
-
-  private void createSeat(int rows, int places, UUID cinemaHallId) {
-    for (int i = 1; i <= rows; i++) {
-      for (int j = 1; j <= places; j++) {
-        Seat seat = new Seat();
-        seat.setPlace(j);
-        seat.setRowNumber(i);
-        seat.setCinemaHallId(cinemaHallId);
-        seat.setBooked(false);
-        seatDao.save(seat);
-      }
-    }
-  }
-
-  private CinemaHall createCinemaHall(String hallName, int rowsNumber, int placesNumber, UUID cinemaId) {
-    CinemaHall cinemaHall = new CinemaHall();
-    cinemaHall.setCinemaId(cinemaId);
-    cinemaHall.setHallName(hallName);
-    cinemaHall.setRowsNumber(rowsNumber);
-    cinemaHall.setPlacesNumber(placesNumber);
-    return cinemaHallDao.save(cinemaHall);
-  }
-
-  private Address createAddress(String street, String city, String houseNumber, int zipCode) {
-    Address address = new Address();
-    address.setZipCode(zipCode);
-    address.setStreet(street);
-    address.setCity(city);
-    address.setHouseNumber(houseNumber);
-    return addressDao.save(address);
-  }
-
   @Test
   void getCinemas() throws Exception {
     mockMvc
@@ -285,5 +247,43 @@ class CinemaControllerTest {
     mockMvc.perform(delete("/api/v1/cinemas/control/{id}", cinema.getId()))
       .andExpect(status().isOk());
     Assertions.assertEquals(4, cinemaDao.findAll().size());
+  }
+
+  private Cinema createCinema(String cinemaName, UUID addressId) {
+    Cinema cinema = new Cinema();
+    cinema.setCinemaName(cinemaName);
+    cinema.setAddressId(addressId);
+    return cinemaDao.save(cinema);
+  }
+
+  private void createSeat(int rows, int places, UUID cinemaHallId) {
+    for (int i = 1; i <= rows; i++) {
+      for (int j = 1; j <= places; j++) {
+        Seat seat = new Seat();
+        seat.setPlace(j);
+        seat.setRowNumber(i);
+        seat.setCinemaHallId(cinemaHallId);
+        seat.setBooked(false);
+        seatDao.save(seat);
+      }
+    }
+  }
+
+  private CinemaHall createCinemaHall(String hallName, int rowsNumber, int placesNumber, UUID cinemaId) {
+    CinemaHall cinemaHall = new CinemaHall();
+    cinemaHall.setCinemaId(cinemaId);
+    cinemaHall.setHallName(hallName);
+    cinemaHall.setRowsNumber(rowsNumber);
+    cinemaHall.setPlacesNumber(placesNumber);
+    return cinemaHallDao.save(cinemaHall);
+  }
+
+  private Address createAddress(String street, String city, String houseNumber, int zipCode) {
+    Address address = new Address();
+    address.setZipCode(zipCode);
+    address.setStreet(street);
+    address.setCity(city);
+    address.setHouseNumber(houseNumber);
+    return addressDao.save(address);
   }
 }

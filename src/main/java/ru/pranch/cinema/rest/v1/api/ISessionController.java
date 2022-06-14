@@ -3,6 +3,7 @@ package ru.pranch.cinema.rest.v1.api;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,7 +23,8 @@ import ru.pranch.cinema.dto.session.UpdateSessionDto;
 @RequestMapping(value = "/api/v1/sessions")
 public interface ISessionController {
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  ResponseEntity<List<SessionInfoDto>> getSessionsInfo(@RequestParam(name = "date", required = false) LocalDateTime date,
+  ResponseEntity<List<SessionInfoDto>> getSessionsInfo(@RequestParam(name = "date", required = false)
+                                                       @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date,
                                                        @RequestParam(name = "movieId", required = false) UUID movieId,
                                                        @RequestParam(name = "cinemaId", required = false) UUID cinemaId);
 

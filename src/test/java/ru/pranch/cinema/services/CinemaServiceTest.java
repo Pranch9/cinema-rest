@@ -48,45 +48,4 @@ class CinemaServiceTest {
     }
     Assertions.assertEquals(10, cinemaService.getCinemas(null, null).size());
   }
-
-  @Test
-  void getCinemaHallsByCinemaId() {
-  }
-
-  @Test
-  void getCinemaByName() {
-  }
-
-  @Test
-  void addCinema() {
-  }
-
-  @Test
-  void editCinema() {
-  }
-
-  @Test
-  void deleteCinema() {
-  }
-
-  @Test
-  void getCinemasByCity() {
-  }
-
-  @Test
-  void addCinemaHallsToCinema() {
-  }
-
-  @Test
-  void updateCinemaHallsToCinema() {
-  }
-
-  @Test
-  void getCinema() {
-  }
-
-  @Test
-  void getSeatsByCinemaHallId() {
-  }
-
 }
